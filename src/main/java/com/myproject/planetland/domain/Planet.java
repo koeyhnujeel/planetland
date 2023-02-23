@@ -17,9 +17,10 @@ import com.myproject.planetland.constants.PlanetStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 @Table(name = "planet", schema = "planet_land")
 public class Planet {
