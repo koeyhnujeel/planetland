@@ -29,6 +29,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.hibernate:hibernate-search:5.11.1.Final'
 
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 }
