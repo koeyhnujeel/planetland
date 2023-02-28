@@ -27,7 +27,7 @@ public class Planet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "planet_id",unique = true, nullable = false)
-	private Long planet_Id;
+	private Long planetId;
 
 	@Column(name = "planet_name")
 	private String planetName;
