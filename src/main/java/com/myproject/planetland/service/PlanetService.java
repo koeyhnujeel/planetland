@@ -8,7 +8,10 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import com.myproject.planetland.constants.PlanetStatus;
 import com.myproject.planetland.domain.Planet;
+import com.myproject.planetland.dto.PlanetDto;
+import com.myproject.planetland.mapper.PlanetMapper;
 import com.myproject.planetland.repository.PlanetRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -35,5 +38,13 @@ public class PlanetService {
 		} else {
 			return res;
 		}
+	}
+
+	public PlanetDto createPlanet(PlanetDto planetDto) {
+		Planet planet = PlanetMapper.convertToModel(planetDto);
+		planet.setPlanetStatus(PlanetStatus.ON_SALE);
+		Planet savedPlanet = planetRepository.save(planet);
+
+		return PlanetMapper.convertToDto(savedPlanet);
 	}
 }
