@@ -13,6 +13,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class UserJoinDto {
+
 	@NotBlank(message = "이름(닉네임)을 입력해주세요.")
 	private String userName;
 
