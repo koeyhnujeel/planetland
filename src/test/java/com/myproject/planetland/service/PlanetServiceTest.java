@@ -39,7 +39,7 @@ class PlanetServiceTest {
 		User user = new User();
 		user.setEmail("test@email.com");
 		user.setPassword("1234");
-		user.setNickname("zunza");
+		user.setUserName("zunza");
 		List<Planet> planets = user.getPlanets();
 		planets.add(saved1);
 		planets.add(saved2);
