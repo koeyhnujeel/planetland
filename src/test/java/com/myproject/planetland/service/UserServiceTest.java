@@ -27,11 +27,11 @@ class UserServiceTest {
 	@DisplayName("유저 조회")
 	void getUserTest() {
 		User user = new User();
-		user.setNickname("test");
+		user.setUserName("test");
 		User savedUser = userRepository.save(user);
 		User res = userService.getUser(savedUser.getUserId());
 
-		assertThat("test").isEqualTo(res.getNickname());
+		assertThat("test").isEqualTo(res.getUserName());
 	}
 
 	@Test
