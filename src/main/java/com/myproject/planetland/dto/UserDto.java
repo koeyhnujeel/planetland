@@ -5,10 +5,11 @@ import lombok.Setter;
 
 @Getter @Setter
 public class UserDto {
-
 	private Long userId;
+
+	private String userName;
 	private String email;
 	private String password;
-	private String nickname;
-	private Long walletId;
+	private int asset;
+
 }
