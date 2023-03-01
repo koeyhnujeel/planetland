@@ -30,16 +30,16 @@
                         <div class="modal-body p-5 pt-0">
                             <form role="form" method="post" th:action="@{/adminPage/add}" th:object="${planetDto}">
                                 <div class="form-floating mb-3">
-                                    <input type="text" th:field="*{planetName}" class="form-control rounded-3" id="floatingName">
-                                    <label for="floatingName">행성이름</label>
+                                    <input type="text" th:field="*{planetName}" class="form-control rounded-3">
+                                    <label>행성이름</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="number" th:field="*{population}" class="form-control rounded-3" id="floatingPopulation">
-                                    <label for="floatingPopulation">인구수</label>
+                                    <input type="number" th:field="*{population}" class="form-control rounded-3">
+                                    <label>인구수</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="number" th:field="*{value}" class="form-control rounded-3" id="floatingValue">
-                                    <label for="floatingValue">가치</label>
+                                    <input type="number" th:field="*{value}" class="form-control rounded-3">
+                                    <label>가치</label>
                                 </div>
                                 <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">등록</button>
                                 <hr class="my-4">
