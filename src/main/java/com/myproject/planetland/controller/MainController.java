@@ -45,16 +45,20 @@ public class MainController {
 	}
 
 	@PostMapping("join")
-	public String joinForm(@ModelAttribute @Valid UserJoinDto userJoinDto, BindingResult bindingResult) {
+	public String joinForm(@ModelAttribute @Valid UserJoinDto userJoinDto, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			log.info("errors = {}", bindingResult);
 			return "joinForm";
 		}
 
-		UserJoinDto res = userService.createUser(userJoinDto);
-		User user = mapper.userJoinDtoToModel(res);
-		userRepository.save(user);
-
+		try {
+			UserJoinDto res = userService.createUser(userJoinDto);
+			User user = mapper.userJoinDtoToModel(res);
+			userRepository.save(user);
+		} catch (IllegalArgumentException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "joinForm";
+		}
 		return "redirect:/";
 	}
 }
