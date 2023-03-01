@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.myproject.planetland.constants.Money;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
+	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
 	private UserMapper mapper;
 
@@ -52,6 +55,8 @@ public class UserService {
 		if (res.isPresent()) {
 			throw new IllegalArgumentException("이미 가입된 회원입니다.");
 		} else {
+			String encodePassword = passwordEncoder.encode(userJoinDto.getPassword());
+			userJoinDto.setPassword(encodePassword);
 			userJoinDto.setAsset(Money.INITIAL_FUNDING);
 			userJoinDto.setRole(Role.ROLE_USER);
 			return userJoinDto;
