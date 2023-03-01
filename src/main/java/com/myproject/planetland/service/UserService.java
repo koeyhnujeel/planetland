@@ -41,6 +41,12 @@ public class UserService {
 	}
 
 	public UserJoinDto createUser(UserJoinDto userJoinDto) {
+		String[] s = userJoinDto.getUserName().split("");
+		for (int i = 0; i < s.length; i++) {
+			if (s[i].isBlank()) {
+				throw new IllegalArgumentException("이름(닉네임)에 공백은 사용할 수 없습니다.");
+			}
+		}
 
 		Optional<User> res = userRepository.findByUserNameOrEmail(userJoinDto.getUserName(), userJoinDto.getEmail());
 		if (res.isPresent()) {
