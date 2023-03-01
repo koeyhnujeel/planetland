@@ -27,7 +27,7 @@ class UserRepositoryTest {
 		User user = new User();
 		user.setEmail("test@email.com");
 		user.setPassword("1234");
-		user.setNickname("test");
+		user.setUserName("test");
 		User savedUser = userRepository.save(user);
 		System.out.println(savedUser.toString());
 	}
@@ -38,7 +38,7 @@ class UserRepositoryTest {
 		User user = new User();
 		user.setEmail("test@email.com");
 		user.setPassword("1234");
-		user.setNickname("test");
+		user.setUserName("test");
 		User savedUser = userRepository.save(user);
 		Optional<User> res = userRepository.findByEmail("test@email.com");
 
