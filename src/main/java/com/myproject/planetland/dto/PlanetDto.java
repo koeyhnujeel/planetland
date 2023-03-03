@@ -13,5 +13,5 @@ public class PlanetDto {
 	private int population;
 	private int value;
 	private PlanetStatus planetStatus;
-	private Long userId;
+	private String owner;
 }
