@@ -2,16 +2,13 @@ package com.myproject.planetland.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
-import com.myproject.planetland.constants.PlanetStatus;
 import com.myproject.planetland.domain.Planet;
-import com.myproject.planetland.dto.PlanetDto;
-import com.myproject.planetland.mapper.PlanetMapper;
+import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.repository.PlanetRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +28,15 @@ public class PlanetService {
 		}
 	}
 
+	public Planet getPlanet(String planetName) {
+		Optional<Planet> res = planetRepository.findByPlanetName(planetName);
+		if (res.isPresent()) {
+			return res.get();
+		} else {
+			throw new EntityNotFoundException(String.format("%s는 존재하지 않는 행성입니다.", planetName));
+		}
+	}
+
 	public List<Planet> getPlanetByUserId(Long userId) {
 		List<Planet> res = planetRepository.findByUser_userId(userId);
 		if (res.isEmpty()) {
@@ -40,11 +46,18 @@ public class PlanetService {
 		}
 	}
 
-	public PlanetDto createPlanet(PlanetDto planetDto) {
-		Planet planet = PlanetMapper.convertToModel(planetDto);
-		planet.setPlanetStatus(PlanetStatus.ON_SALE);
-		Planet savedPlanet = planetRepository.save(planet);
+	public List<Planet> getAllPlanet() {
+		List<Planet> planetList = planetRepository.findAll();
 
-		return PlanetMapper.convertToDto(savedPlanet);
+		return planetList;
+	}
+
+	public AddPlanetDto createPlanet(AddPlanetDto addPlanetDto) {
+		Optional<Planet> res = planetRepository.findByPlanetName(addPlanetDto.getPlanetName());
+		if (res.isPresent()) {
+			throw new IllegalArgumentException("이미 존재하는 행성입니다.");
+		} else {
+			return addPlanetDto;
+		}
 	}
 }
