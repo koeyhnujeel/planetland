@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-03T17:39:51+0900",
+    date = "2023-03-04T21:31:08+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -25,9 +25,12 @@ public class PlanetMapperImpl implements PlanetMapper {
 
         Planet planet = new Planet();
 
+        planet.setPlanetId( addPlanetDto.getPlanetId() );
         planet.setPlanetName( addPlanetDto.getPlanetName() );
         planet.setPopulation( addPlanetDto.getPopulation() );
         planet.setValue( addPlanetDto.getValue() );
+        planet.setImgName( addPlanetDto.getImgName() );
+        planet.setImgPath( addPlanetDto.getImgPath() );
         planet.setPlanetStatus( addPlanetDto.getPlanetStatus() );
 
         return planet;
@@ -45,9 +48,29 @@ public class PlanetMapperImpl implements PlanetMapper {
         planetDto.setPlanetName( planet.getPlanetName() );
         planetDto.setPopulation( planet.getPopulation() );
         planetDto.setValue( planet.getValue() );
+        planetDto.setImgPath( planet.getImgPath() );
         planetDto.setPlanetStatus( planet.getPlanetStatus() );
 
         return planetDto;
+    }
+
+    @Override
+    public AddPlanetDto ModelToAddPlanetDto(Planet planet) {
+        if ( planet == null ) {
+            return null;
+        }
+
+        AddPlanetDto addPlanetDto = new AddPlanetDto();
+
+        addPlanetDto.setPlanetId( planet.getPlanetId() );
+        addPlanetDto.setPlanetName( planet.getPlanetName() );
+        addPlanetDto.setPopulation( planet.getPopulation() );
+        addPlanetDto.setValue( planet.getValue() );
+        addPlanetDto.setImgName( planet.getImgName() );
+        addPlanetDto.setImgPath( planet.getImgPath() );
+        addPlanetDto.setPlanetStatus( planet.getPlanetStatus() );
+
+        return addPlanetDto;
     }
 
     @Override
@@ -71,7 +94,11 @@ public class PlanetMapperImpl implements PlanetMapper {
 
         PlanetListDto planetListDto = new PlanetListDto();
 
+        planetListDto.setPlanetId( planet.getPlanetId() );
         planetListDto.setPlanetName( planet.getPlanetName() );
+        planetListDto.setPlanetStatus( planet.getPlanetStatus() );
+        planetListDto.setImgPath( planet.getImgPath() );
+        planetListDto.setImgName( planet.getImgName() );
 
         return planetListDto;
     }
