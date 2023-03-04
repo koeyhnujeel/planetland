@@ -14,8 +14,8 @@ public class WebSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/user/**", "/mypage/**").authenticated()
-			.antMatchers("/adminPage/**").access("hasRole('ROLE_ADMIN')")
+			.antMatchers( "/mypage/**").authenticated()
+			.antMatchers("/planets/**/edit", "/planets/**/add").access("hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()
