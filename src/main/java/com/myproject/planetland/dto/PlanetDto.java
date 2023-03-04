@@ -12,6 +12,7 @@ public class PlanetDto {
 	private String planetName;
 	private int population;
 	private int value;
+	private String imgPath;
 	private PlanetStatus planetStatus;
 	private String owner;
 }
