@@ -1,5 +1,6 @@
 package com.myproject.planetland.controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.planetland.constants.PlanetStatus;
@@ -40,36 +42,9 @@ public class PlanetController {
 		return PlanetStatus.values();
 	}
 
-	@GetMapping("/add")
-	public String createPlanetForm(Model model) {
-		model.addAttribute("addPlanetDto", new AddPlanetDto());
-		return "addForm";
-	}
-
-	@PostMapping("/add")
-	public String createPlanet(@ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		if (bindingResult.hasErrors()) {
-			log.info("errorMessage = {}", bindingResult);
-			return "addForm";
-		}
-
-		try {
-			AddPlanetDto res = planetService.createPlanet(addPlanetDto);
-			Planet planet = mapper.addPlanetDtoToModel(addPlanetDto);
-			Planet savedPlanet = planetRepository.save(planet);
-			redirectAttributes.addAttribute("planetName", savedPlanet.getPlanetName());
-		} catch (IllegalArgumentException e) {
-			log.info("errorMessage = {}", e.getMessage());
-			model.addAttribute("errorMessage", e.getMessage());
-
-			return "addForm";
-		}
-
-		return "redirect:/planets/{planetName}/detail";
-	}
-	@GetMapping("/{planetName}/detail")
-	public String getPlanet(@PathVariable String planetName, Model model) {
-		Planet planet = planetService.getPlanet(planetName);
+	@GetMapping("/{planetId}/detail")
+	public String getPlanet(@PathVariable Long planetId, Model model) {
+		Planet planet = planetService.getPlanet(planetId);
 		PlanetDto planetDto = mapper.ModelToDto(planet);
 
 		if (planet.getUser() == null) {
@@ -80,5 +55,56 @@ public class PlanetController {
 		model.addAttribute("planetDto", planetDto);
 
 		return "planet";
+	}
+	@GetMapping("/add")
+	public String addForm(Model model) {
+		model.addAttribute("addPlanetDto", new AddPlanetDto());
+		return "addForm";
+	}
+
+	@PostMapping("/add")
+	public String addPlanet(@ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult,
+		Model model, RedirectAttributes redirectAttributes, MultipartFile imgFile) throws IOException {
+
+		if (bindingResult.hasErrors()) {
+			log.info("errorMessage = {}", bindingResult);
+			return "addForm";
+		}
+
+		try {
+			AddPlanetDto res = planetService.createPlanet(addPlanetDto, imgFile);
+			redirectAttributes.addAttribute("planetName", res.getPlanetName());
+		} catch (IllegalArgumentException e) {
+			log.info("errorMessage = {}", e.getMessage());
+			model.addAttribute("errorMessage", e.getMessage());
+			return "addForm";
+		}
+		return "redirect:/planets/{planetName}/detail";
+	}
+
+	@GetMapping("/{planetId}/edit")
+	public String editForm(@PathVariable Long planetId, Model model) {
+		Planet planet = planetService.getPlanet(planetId);
+		AddPlanetDto addPlanetDto = mapper.ModelToAddPlanetDto(planet);
+		model.addAttribute("addPlanetDto", addPlanetDto);
+		return "editForm";
+	}
+	@PostMapping("/{planetId}/edit")
+	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
+		if (bindingResult.hasErrors()) {
+			log.info("errorMessage = {}", bindingResult);
+			return "editForm";
+		}
+
+		try {
+			AddPlanetDto updatePlanetDto = planetService.updatePlanet(planetId, addPlanetDto);
+			redirectAttributes.addAttribute("planetId", updatePlanetDto.getPlanetId());
+		} catch (IllegalArgumentException e) {
+			log.info("errorMessage = {}", e.getMessage());
+			model.addAttribute("errorMessage", e.getMessage());
+			return "editForm";
+		}
+		return "redirect:/planets/{planetId}/detail";
 	}
 }
