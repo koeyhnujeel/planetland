@@ -1,10 +1,6 @@
 package com.myproject.planetland.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class MainController {
 
 	@Autowired PlanetService planetService;
@@ -29,9 +26,7 @@ public class MainController {
 	public String home(Model model) {
 		List<Planet> planetList = planetService.getAllPlanet();
 		List<PlanetListDto> planetListDto = mapper.ModelToDtoList(planetList);
-
 		model.addAttribute("planetListDto", planetListDto);
-
 		return "main";
 	}
 }
