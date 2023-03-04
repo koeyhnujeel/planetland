@@ -1,5 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
       layout:decorate="~{layouts/layout1}">
 <head>
@@ -10,7 +11,8 @@
         <div class="row">
             <div class="col">
                 <div class="card" style="width: 40rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img th:if="${planetDto.imgPath == null}" th:src="@{/images/repair.png}" height="300" class="card-img-top">
+                    <img th:src="${planetDto.imgPath}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${planetDto.planetName}">행성 이름</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
@@ -28,8 +30,8 @@
                         </oi>
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <button type="button" class="btn btn-outline-secondary" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/planets/{planetId}/edit(planetId=${planetDto.planetId})}'|">수정</button>
+                        <button type="button" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
                     </div>
                 </div>
             </div>
