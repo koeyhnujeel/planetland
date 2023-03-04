@@ -2,6 +2,7 @@ package com.myproject.planetland.mapper;
 
 import java.util.List;
 
+import org.mapstruct.EnumMapping;
 import org.mapstruct.Mapper;
 
 import com.myproject.planetland.domain.Planet;
@@ -13,5 +14,7 @@ import com.myproject.planetland.dto.PlanetListDto;
 public interface PlanetMapper {
 	Planet addPlanetDtoToModel(AddPlanetDto addPlanetDto);
 	PlanetDto ModelToDto(Planet planet);
+
+	AddPlanetDto ModelToAddPlanetDto(Planet planet);
 	List<PlanetListDto> ModelToDtoList(List<Planet> planets);
 }
