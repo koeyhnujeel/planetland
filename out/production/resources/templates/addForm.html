@@ -3,7 +3,7 @@
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
       layout:decorate="~{layouts/layout1}">
 <head>
-    <title>관리자 페이지-Planet Land</title>
+    <title>행성등록-Planet Land</title>
 </head>
 <div layout:fragment="content">
     <div class="modal modal-signin position-static d-block bg-white" tabindex="0" role="dialog" id="modalSignin">
@@ -11,40 +11,46 @@
             <div class="alert alert-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
                     <h1 class="fw-bold mb-0 fs-2">행성 등록</h1>
                 </div>
-
-                <div class="modal-body p-5 pt-0">
-                    <form role="form" method="post" th:action="@{/planets/add}" th:object="${addPlanetDto}">
+                <li class="modal-body p-5 pt-0" style="list-style:none;">
+                    <form role="form" method="post" th:action="@{/planets/add}" th:object="${addPlanetDto}"
+                          enctype="multipart/form-data">
                         <div class="form-floating mb-3">
                             <input type="text" th:field="*{planetName}" class="form-control rounded-3">
                             <label>행성이름</label>
-                            <p class="text text-danger" th:if="${#fields.hasErrors('planetName')}" th:errors="*{planetName}">Test</p>
+                            <p class="text text-danger" th:if="${#fields.hasErrors('planetName')}"
+                               th:errors="*{planetName}">Test</p>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" th:field="*{population}" class="form-control rounded-3">
                             <label>인구수</label>
-                            <p class="text text-danger" th:if="${#fields.hasErrors('population')}" th:errors="*{population}">Test</p>
+                            <p class="text text-danger" th:if="${#fields.hasErrors('population')}"
+                               th:errors="*{population}">Test</p>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" th:field="*{value}" class="form-control rounded-3">
                             <label>가치</label>
                         </div>
+                        <input type="file" name="imgFile" id="imgFile" class="form-control rounded-3">
+                        <br>
                         <div class="container text-center">
                             <div class="row">
                                 <div th:each="status : ${planetStatuses}" class="col">
-                                    <input type="radio" th:field="*{planetStatus}" th:value="${status.name()}" class="btn-check" name="options-outlined" autocomplete="off" checked>
+                                    <input type="radio" th:field="*{planetStatus}" th:value="${status.name()}"
+                                           class="btn-check" name="options-outlined" autocomplete="off" checked>
                                     <label th:for="${#ids.prev('planetStatus')}" th:text="${status}"
                                            class="btn btn-outline-secondary">행성 상태</label>
                                 </div>
+                                <p class="text text-danger" th:if="${#fields.hasErrors('planetStatus')}"
+                                   th:errors="*{planetStatus}">Test</p>
                             </div>
                         </div>
                         <br>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">등록</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn btn-outline-secondary" type="button" th:onclick="|location.href='@{/}'|" >취소</button>
                         <hr class="my-4">
                     </form>
-                </div>
             </div>
         </div>
     </div>
