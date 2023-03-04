@@ -36,6 +36,10 @@ public class Planet {
 
 	private int value;
 
+	private String imgName;
+
+	private String imgPath;
+
 	@Enumerated(EnumType.STRING)
 	private PlanetStatus planetStatus;
 
