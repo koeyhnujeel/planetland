@@ -13,6 +13,7 @@ import com.myproject.planetland.domain.Planet;
 public interface PlanetRepository extends JpaRepository<Planet, Long> {
 
 	List<Planet> findByUser_userId(Long userId);
-
 	Optional<Planet> findByPlanetName(String planetName);
+	List<Planet> findAllByOrderByValueDesc();
+	List<Planet> findAllByOrderByValueAsc();
 }
