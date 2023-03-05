@@ -20,18 +20,35 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <oi class="bg-secondary" style="color:white"> 인구수
-                        <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.population}">An item</li>
+                        <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.population}">population</li>
                         </oi>
                         <oi class="bg-secondary" style="color:white"> 가치
-                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.value}">An item</li>
+                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.value}">value</li>
                         </oi>
                         <oi class="bg-secondary" style="color:white"> 소유주
-                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.owner}">An item</li>
+                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.owner}">owner</li>
                         </oi>
                     </ul>
                     <div class="card-body">
                         <button type="button" class="btn btn-outline-secondary" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/planets/{planetId}/edit(planetId=${planetDto.planetId})}'|">수정</button>
-                        <button type="button" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">행성 삭제</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" th:text="|${planetDto.planetName} 행성을 삭제하시겠습까?|">
+                                        delete
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                        <button type="submit" th:onclick="|location.href='@{/planets/{planetId}/delete(planetId=${planetDto.planetId})}'|" class="btn btn-primary">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
