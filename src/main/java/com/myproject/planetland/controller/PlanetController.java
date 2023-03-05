@@ -90,7 +90,8 @@ public class PlanetController {
 		return "editForm";
 	}
 	@PostMapping("/{planetId}/edit")
-	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult,
+		Model model, RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
 			log.info("errorMessage = {}", bindingResult);
@@ -106,5 +107,11 @@ public class PlanetController {
 			return "editForm";
 		}
 		return "redirect:/planets/{planetId}/detail";
+	}
+
+	@GetMapping("/{planetId}/delete")
+	public String deletePlanet(@PathVariable Long planetId) throws IOException{
+		planetService.deletePlanet(planetId);
+		return "redirect:/";
 	}
 }
