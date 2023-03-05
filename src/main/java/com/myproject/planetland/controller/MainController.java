@@ -5,28 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.dto.PlanetListDto;
-import com.myproject.planetland.mapper.PlanetMapper;
 import com.myproject.planetland.service.PlanetService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("/")
 @Slf4j
 public class MainController {
 
 	@Autowired PlanetService planetService;
-	@Autowired PlanetMapper mapper;
 
-	@GetMapping
-	public String home(Model model) {
-		List<Planet> planetList = planetService.getAllPlanet();
-		List<PlanetListDto> planetListDto = mapper.ModelToDtoList(planetList);
+	@GetMapping(value = {"/", "/sort"})
+	public String home(@RequestParam(required = false, defaultValue = "기본 순") String keyword, Model model) {
+		List<PlanetListDto> planetListDto = planetService.getAllPlanet(keyword);
 		model.addAttribute("planetListDto", planetListDto);
+		model.addAttribute("keyword", keyword);
 		return "main";
 	}
 }
