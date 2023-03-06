@@ -53,7 +53,6 @@ public class UserController {
 		} catch (IllegalArgumentException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			log.info("errorMessage = {}", e.getMessage());
-
 			return "joinForm";
 		}
 		return "redirect:/";
