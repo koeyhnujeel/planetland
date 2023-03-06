@@ -11,40 +11,113 @@
         <div class="row">
             <div class="col">
                 <div class="card" style="width: 40rem;">
-                    <img th:if="${planetDto.imgPath == null}" th:src="@{/images/repair.png}" height="300" class="card-img-top">
+                    <img th:if="${planetDto.imgPath == null}" th:src="@{/images/repair.png}" height="300"
+                         class="card-img-top">
                     <img th:src="${planetDto.imgPath}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${planetDto.planetName}">행성 이름</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's
                             content.</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <oi class="bg-secondary" style="color:white"> 인구수
-                        <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.population}">population</li>
+                            <li class="list-group-item" style="font-weight:bold" th:text="|${planetDto.population}명|">
+                                population
+                            </li>
                         </oi>
                         <oi class="bg-secondary" style="color:white"> 가치
-                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.value}">value</li>
+                            <li class="list-group-item" style="font-weight:bold" th:text="|${planetDto.value}원|">value
+                            </li>
                         </oi>
                         <oi class="bg-secondary" style="color:white"> 소유주
-                            <li class="list-group-item" style="font-weight:bold" th:text="${planetDto.owner}">owner</li>
+                            <li class="list-group-item" style="font-weight:bold" th:if="${planetDto.owner == null}">없음
+                            </li>
+                            <li class="list-group-item" style="font-weight:bold" th:unless="${planetDto.owner == null}"
+                                th:text="${planetDto.owner}">owner
+                            </li>
                         </oi>
                     </ul>
                     <div class="card-body">
-                        <button type="button" class="btn btn-outline-secondary" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/planets/{planetId}/edit(planetId=${planetDto.planetId})}'|">수정</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <button type="button" class="btn btn-primary"
+                                th:if="${#authorization.expr('isAuthenticated()')}" data-bs-toggle="modal"
+                                data-bs-target="#buyModal">
+                            행성 구매
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                th:unless="${#authorization.expr('isAuthenticated()')}"
+                                th:onclick="|location.href='@{/login}'|">
+                            행성 구매
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" sec:authorize="hasRole('ROLE_ADMIN')"
+                                th:onclick="|location.href='@{/planets/{planetId}/edit(planetId=${planetDto.planetId})}'|">
+                            행성 수정
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal" sec:authorize="hasRole('ROLE_ADMIN')">행성 삭제
+                        </button>
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">행성 삭제</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel">행성 삭제</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" th:text="|${planetDto.planetName} 행성을 삭제하시겠습까?|">
                                         delete
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                        <button type="submit" th:onclick="|location.href='@{/planets/{planetId}/delete(planetId=${planetDto.planetId})}'|" class="btn btn-primary">삭제</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소
+                                        </button>
+                                        <button type="submit"
+                                                th:onclick="|location.href='@{/planets/{planetId}/delete(planetId=${planetDto.planetId})}'|"
+                                                class="btn btn-primary">삭제
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="alert alert-danger" th:if="${errorMessage != null}"
+                                             th:text="${errorMessage}"></div>
+                                        <h1 class="modal-title fs-5" id="buyModalLabel">행성 구매</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" th:text="|${planetDto.planetName} 행성을 구매하시겠습니까?|">
+                                        행성이름
+                                    </div>
+                                    <div class="modal-body" th:text="|행성가치: ${planetDto.value}원|">
+                                        행성가치
+                                    </div>
+                                    <div class="modal-body" th:text="|내 잔고: ${userAsset}원|">
+                                        잔고
+                                    </div>
+                                    <div class="modal-body" style="color: red"
+                                         th:unless="${userAsset > planetDto.value}">
+                                        잔고가 부족합니다.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"
+                                                th:if="${userAsset > planetDto.value}"
+                                                th:onclick="|location.href='@{/planets/{planetId}/buy(planetId=${planetDto.planetId})}'|">
+                                            구매
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                                th:unless="${userAsset > planetDto.value}"
+                                                th:onclick="|location.href='@{/planets/{planetId}/buy(planetId=${planetDto.planetId})}'|"
+                                                disabled>
+                                            구매
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소
+                                        </button>
                                     </div>
                                 </div>
                             </div>
