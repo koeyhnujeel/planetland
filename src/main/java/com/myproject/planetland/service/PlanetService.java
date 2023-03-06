@@ -9,14 +9,18 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.planetland.constants.ImgDir;
+import com.myproject.planetland.constants.PlanetStatus;
 import com.myproject.planetland.domain.Planet;
+import com.myproject.planetland.domain.User;
 import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
 import com.myproject.planetland.mapper.PlanetMapper;
 import com.myproject.planetland.repository.PlanetRepository;
+import com.myproject.planetland.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PlanetService {
 
 	private final PlanetRepository planetRepository;
+	private final UserRepository userRepository;
 	private final PlanetMapper mapper;
 
 	public Planet getPlanet(Long planetId) {
@@ -57,7 +62,7 @@ public class PlanetService {
 	}
 
 	public List<PlanetListDto> getAllPlanet(String keyword) {
-		if(keyword.equals("기본 순")) {
+		if (keyword.equals("기본 순")) {
 			List<Planet> planetList = planetRepository.findAll();
 			List<PlanetListDto> planetListDtos = mapper.ModelToDtoList(planetList);
 			return planetListDtos;
@@ -87,10 +92,10 @@ public class PlanetService {
 			UUID uuid = UUID.randomUUID(); // 파일이름 중복을 피하기 위한 식별자 역할
 			String savedFileName = uuid + "_" + oriName;
 
-			imgFile.transferTo(new File(myPath+savedFileName));
+			imgFile.transferTo(new File(myPath + savedFileName));
 
 			addPlanetDto.setImgName(savedFileName);
-			addPlanetDto.setImgPath("/images/"+savedFileName);
+			addPlanetDto.setImgPath("/images/" + savedFileName);
 
 			Planet planet = mapper.addPlanetDtoToModel(addPlanetDto);
 			planetRepository.save(planet);
@@ -115,6 +120,7 @@ public class PlanetService {
 			throw new IllegalArgumentException("잘못된 경로입니다.");
 		}
 	}
+
 	public void deletePlanet(Long planetId) throws IOException {
 		Optional<Planet> res = planetRepository.findById(planetId);
 		if (res.isEmpty()) {
@@ -128,5 +134,30 @@ public class PlanetService {
 			file.delete();
 		}
 		planetRepository.deleteById(planetId);
+	}
+
+	@Transactional
+	public void buyPlanet(String userName, Long planetId) {
+		Optional<User> resUser = userRepository.findByUserName(userName);
+		Optional<Planet> resPlanet = planetRepository.findById(planetId);
+		if (resUser.isEmpty() || resPlanet.isEmpty()) {
+			throw new IllegalArgumentException("잘못된 경로입니다.");
+		}
+
+		User user = resUser.get();
+		Planet planet = resPlanet.get();
+
+		if (planet.getUser() != null) {
+			User res = planet.getUser();
+			List<Planet> planets = res.getPlanets();
+
+		}
+
+		planet.setUser(user);
+		planet.setPlanetStatus(PlanetStatus.SOLD_OUT);
+		user.setAsset(user.getAsset() - planet.getValue());
+		user.getPlanets().add(planet);
+		userRepository.save(user);
+		planetRepository.save(planet);
 	}
 }
