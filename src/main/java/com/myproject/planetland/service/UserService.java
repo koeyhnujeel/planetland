@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +33,12 @@ public class UserService {
 		}
 	}
 
-	public User getUserByEmail(String email) {
-		Optional<User> res = userRepository.findByEmail(email);
+	public User getUserByUserName(String userName) {
+		Optional<User> res = userRepository.findByUserName(userName);
 		if (res.isPresent()) {
 			return res.get();
 		} else {
-			throw new EntityNotFoundException(String.format("%s로 조회되는 회원이 없습니다.", email));
+			throw new EntityNotFoundException(String.format("%s로 조회되는 회원이 없습니다.", userName));
 		}
 	}
 
