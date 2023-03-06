@@ -1,10 +1,10 @@
 package com.myproject.planetland.controller;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.constants.PlanetStatus;
 import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.dto.AddPlanetDto;
@@ -43,19 +44,20 @@ public class PlanetController {
 	}
 
 	@GetMapping("/{planetId}/detail")
-	public String getPlanet(@PathVariable Long planetId, Model model) {
+	public String getPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, Model model) {
 		Planet planet = planetService.getPlanet(planetId);
 		PlanetDto planetDto = mapper.ModelToDto(planet);
 
-		if (planet.getUser() == null) {
-			planetDto.setOwner("없음");
-		} else {
+		if (planet.getUser() != null) {
 			planetDto.setOwner(planet.getUser().getUserName());
 		}
+		if (user != null) {
+			model.addAttribute("userAsset", user.getUser().getAsset());
+		}
 		model.addAttribute("planetDto", planetDto);
-
 		return "planet";
 	}
+
 	@GetMapping("/add")
 	public String addForm(Model model) {
 		model.addAttribute("addPlanetDto", new AddPlanetDto());
@@ -73,13 +75,13 @@ public class PlanetController {
 
 		try {
 			AddPlanetDto res = planetService.createPlanet(addPlanetDto, imgFile);
-			redirectAttributes.addAttribute("planetName", res.getPlanetName());
+			redirectAttributes.addAttribute("planetName", res.getPlanetId());
 		} catch (IllegalArgumentException e) {
 			log.info("errorMessage = {}", e.getMessage());
 			model.addAttribute("errorMessage", e.getMessage());
 			return "addForm";
 		}
-		return "redirect:/planets/{planetName}/detail";
+		return "redirect:/planets/{planeId}/detail";
 	}
 
 	@GetMapping("/{planetId}/edit")
@@ -89,8 +91,10 @@ public class PlanetController {
 		model.addAttribute("addPlanetDto", addPlanetDto);
 		return "editForm";
 	}
+
 	@PostMapping("/{planetId}/edit")
-	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto, BindingResult bindingResult,
+	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto,
+		BindingResult bindingResult,
 		Model model, RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
@@ -110,8 +114,17 @@ public class PlanetController {
 	}
 
 	@GetMapping("/{planetId}/delete")
-	public String deletePlanet(@PathVariable Long planetId) throws IOException{
+	public String deletePlanet(@PathVariable Long planetId) throws IOException {
 		planetService.deletePlanet(planetId);
 		return "redirect:/";
+	}
+
+	@GetMapping("/{planetId}/buy")
+	public String buyPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, Model model,
+		RedirectAttributes redirectAttributes) {
+
+		planetService.buyPlanet(user.getUsername(), planetId);
+		redirectAttributes.addAttribute("planetId", planetId);
+		return "redirect:/planets/{planetId}/detail";
 	}
 }
