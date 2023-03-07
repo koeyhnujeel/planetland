@@ -52,6 +52,7 @@ public class PlanetController {
 			planetDto.setOwner(planet.getUser().getUserName());
 		}
 		if (user != null) {
+			model.addAttribute("userName", user.getUsername());
 			model.addAttribute("userAsset", user.getUser().getAsset());
 		}
 		model.addAttribute("planetDto", planetDto);
@@ -75,13 +76,13 @@ public class PlanetController {
 
 		try {
 			AddPlanetDto res = planetService.createPlanet(addPlanetDto, imgFile);
-			redirectAttributes.addAttribute("planetName", res.getPlanetId());
+			redirectAttributes.addAttribute("planetId", res.getPlanetId());
 		} catch (IllegalArgumentException e) {
 			log.info("errorMessage = {}", e.getMessage());
 			model.addAttribute("errorMessage", e.getMessage());
 			return "addForm";
 		}
-		return "redirect:/planets/{planeId}/detail";
+		return "redirect:/planets/{planetId}/detail";
 	}
 
 	@GetMapping("/{planetId}/edit")
@@ -94,8 +95,8 @@ public class PlanetController {
 
 	@PostMapping("/{planetId}/edit")
 	public String editPlanet(@PathVariable Long planetId, @ModelAttribute @Valid AddPlanetDto addPlanetDto,
-		BindingResult bindingResult,
-		Model model, RedirectAttributes redirectAttributes) {
+		BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, MultipartFile imgFile) throws
+		IOException {
 
 		if (bindingResult.hasErrors()) {
 			log.info("errorMessage = {}", bindingResult);
@@ -103,7 +104,7 @@ public class PlanetController {
 		}
 
 		try {
-			AddPlanetDto updatePlanetDto = planetService.updatePlanet(planetId, addPlanetDto);
+			AddPlanetDto updatePlanetDto = planetService.updatePlanet(planetId, addPlanetDto, imgFile);
 			redirectAttributes.addAttribute("planetId", updatePlanetDto.getPlanetId());
 		} catch (IllegalArgumentException e) {
 			log.info("errorMessage = {}", e.getMessage());
@@ -120,10 +121,22 @@ public class PlanetController {
 	}
 
 	@GetMapping("/{planetId}/buy")
-	public String buyPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, Model model,
-		RedirectAttributes redirectAttributes) {
-
+	public String buyPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, RedirectAttributes redirectAttributes) {
 		planetService.buyPlanet(user.getUsername(), planetId);
+		redirectAttributes.addAttribute("planetId", planetId);
+		return "redirect:/planets/{planetId}/detail";
+	}
+
+	@GetMapping("/{planetId}/sell")
+	public String sellPlanet(@PathVariable Long planetId, RedirectAttributes redirectAttributes) {
+		planetService.sellPlanet(planetId);
+		redirectAttributes.addAttribute("planetId", planetId);
+		return "redirect:/planets/{planetId}/detail";
+	}
+
+	@GetMapping("/{planetId}/cancelSell")
+	public String cancelSellPlanet(@PathVariable Long planetId, RedirectAttributes redirectAttributes) {
+		planetService.cancelSellPlanet(planetId);
 		redirectAttributes.addAttribute("planetId", planetId);
 		return "redirect:/planets/{planetId}/detail";
 	}
