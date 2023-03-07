@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myproject.planetland.constants.ImgDir;
@@ -86,33 +85,37 @@ public class PlanetService {
 		if (res.isPresent()) {
 			throw new IllegalArgumentException("이미 존재하는 행성입니다.");
 		} else {
-			String oriName = imgFile.getOriginalFilename();
-			String myPath = ImgDir.PATH;
-
-			UUID uuid = UUID.randomUUID(); // 파일이름 중복을 피하기 위한 식별자 역할
-			String savedFileName = uuid + "_" + oriName;
-
-			imgFile.transferTo(new File(myPath + savedFileName));
+			String savedFileName = getFileName(imgFile);
 
 			addPlanetDto.setImgName(savedFileName);
 			addPlanetDto.setImgPath("/images/" + savedFileName);
 
 			Planet planet = mapper.addPlanetDtoToModel(addPlanetDto);
-			planetRepository.save(planet);
+			Planet savedPlanet = planetRepository.save(planet);
 
-			return addPlanetDto;
+			return mapper.ModelToAddPlanetDto(savedPlanet);
 		}
 	}
 
-	public AddPlanetDto updatePlanet(Long planetId, AddPlanetDto addPlanetDto) {
+	public AddPlanetDto updatePlanet(Long planetId, AddPlanetDto addPlanetDto, MultipartFile imgFile) throws IOException {
 		Optional<Planet> res = planetRepository.findById(planetId);
 		if (res.isPresent()) {
 			Planet updatePlanet = res.get();
 			updatePlanet.setPlanetName(addPlanetDto.getPlanetName());
 			updatePlanet.setPopulation(addPlanetDto.getPopulation());
 			updatePlanet.setValue(addPlanetDto.getValue());
-			updatePlanet.setImgPath(addPlanetDto.getImgPath());
 			updatePlanet.setPlanetStatus(addPlanetDto.getPlanetStatus());
+			if (imgFile != null) {
+				if (updatePlanet.getImgPath() != null) {
+					String myPath = ImgDir.PATH;
+					File file1 = new File(myPath, updatePlanet.getImgName());
+					file1.delete();
+				}
+				String savedFileName = getFileName(imgFile);
+				updatePlanet.setImgName(savedFileName);
+				updatePlanet.setImgPath("/images/" + savedFileName);
+			}
+
 			Planet savedPlanet = planetRepository.save(updatePlanet);
 			AddPlanetDto updatePlantDto = mapper.ModelToAddPlanetDto(savedPlanet);
 			return updatePlantDto;
@@ -136,7 +139,6 @@ public class PlanetService {
 		planetRepository.deleteById(planetId);
 	}
 
-	@Transactional
 	public void buyPlanet(String userName, Long planetId) {
 		Optional<User> resUser = userRepository.findByUserName(userName);
 		Optional<Planet> resPlanet = planetRepository.findById(planetId);
@@ -150,14 +152,51 @@ public class PlanetService {
 		if (planet.getUser() != null) {
 			User res = planet.getUser();
 			List<Planet> planets = res.getPlanets();
-
+			for (int i = 0; i < planets.size(); i++) {
+				if (planets.get(i).getPlanetName().equals(planet.getPlanetName())) {
+					planets.remove(i);
+					res.setPlanets(planets);
+					userRepository.save(res);
+				}
+			}
 		}
-
 		planet.setUser(user);
 		planet.setPlanetStatus(PlanetStatus.SOLD_OUT);
 		user.setAsset(user.getAsset() - planet.getValue());
 		user.getPlanets().add(planet);
 		userRepository.save(user);
 		planetRepository.save(planet);
+	}
+
+	public void sellPlanet(Long planetId) {
+		Optional<Planet> res = planetRepository.findById(planetId);
+		if (res.isEmpty()) {
+			throw new IllegalArgumentException("잘못된 경로입니다.");
+		}
+
+		Planet planet = res.get();
+		planet.setPlanetStatus(PlanetStatus.ON_SALE);
+		planetRepository.save(planet);
+	}
+	public void cancelSellPlanet(Long planetId) {
+		Optional<Planet> res = planetRepository.findById(planetId);
+		if (res.isEmpty()) {
+			throw new IllegalArgumentException("잘못된 경로입니다.");
+		}
+
+		Planet planet = res.get();
+		planet.setPlanetStatus(PlanetStatus.SOLD_OUT);
+		planetRepository.save(planet);
+	}
+
+	private static String getFileName(MultipartFile imgFile) throws IOException {
+		String oriName = imgFile.getOriginalFilename();
+		String myPath = ImgDir.PATH;
+
+		UUID uuid = UUID.randomUUID(); // 파일이름 중복을 피하기 위한 식별자 역할
+		String savedFileName = uuid + "_" + oriName;
+
+		imgFile.transferTo(new File(myPath + savedFileName));
+		return savedFileName;
 	}
 }
