@@ -42,7 +42,7 @@ public class UserService {
 		}
 	}
 
-	public UserJoinDto createUser(UserJoinDto userJoinDto) {
+	public void createUser(UserJoinDto userJoinDto) {
 		String[] s = userJoinDto.getUserName().split("");
 		for (int i = 0; i < s.length; i++) {
 			if (s[i].isBlank()) {
@@ -55,10 +55,13 @@ public class UserService {
 			throw new IllegalArgumentException("이미 가입된 회원입니다.");
 		} else {
 			String encodePassword = passwordEncoder.encode(userJoinDto.getPassword());
-			userJoinDto.setPassword(encodePassword);
-			userJoinDto.setAsset(Money.INITIAL_FUNDING);
-			userJoinDto.setRole(Role.ROLE_USER);
-			return userJoinDto;
+			User user = new User();
+			user.setUserName(userJoinDto.getUserName());
+			user.setPassword(encodePassword);
+			user.setEmail(userJoinDto.getEmail());
+			user.setAsset(Money.INITIAL_FUNDING);
+			user.setRole(Role.ROLE_USER);
+			userRepository.save(user);
 		}
 	}
 }
