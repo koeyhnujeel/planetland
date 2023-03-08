@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.domain.User;
 import com.myproject.planetland.repository.UserRepository;
 
