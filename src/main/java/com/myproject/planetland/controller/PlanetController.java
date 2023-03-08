@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.constants.PlanetStatus;
-import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.mapper.PlanetMapper;
@@ -45,12 +44,7 @@ public class PlanetController {
 
 	@GetMapping("/{planetId}/detail")
 	public String getPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, Model model) {
-		Planet planet = planetService.getPlanet(planetId);
-		PlanetDto planetDto = mapper.ModelToDto(planet);
-
-		if (planet.getUser() != null) {
-			planetDto.setOwner(planet.getUser().getUserName());
-		}
+		PlanetDto planetDto = planetService.getPlanetDetail(planetId);
 		if (user != null) {
 			model.addAttribute("userName", user.getUsername());
 			model.addAttribute("userAsset", user.getUser().getAsset());
@@ -87,8 +81,7 @@ public class PlanetController {
 
 	@GetMapping("/{planetId}/edit")
 	public String editForm(@PathVariable Long planetId, Model model) {
-		Planet planet = planetService.getPlanet(planetId);
-		AddPlanetDto addPlanetDto = mapper.ModelToAddPlanetDto(planet);
+		AddPlanetDto addPlanetDto = planetService.getEditPlanet(planetId);
 		model.addAttribute("addPlanetDto", addPlanetDto);
 		return "editForm";
 	}
