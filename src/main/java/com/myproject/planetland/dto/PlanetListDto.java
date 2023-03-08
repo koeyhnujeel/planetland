@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
-public class PlanetListDto {
+public class PlanetListDto { // 메인 화면
 
 	private Long planetId;
 	private String planetName;
