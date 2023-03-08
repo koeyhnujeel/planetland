@@ -7,19 +7,15 @@
     <title>Planet Land</title>
 </head>
 <div layout:fragment="content">
-    <div class="alert alert-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
     <div class="container text-center">
         <div class="row">
             <div class="col">
                 <div class="card" style="width: 40rem; border-color: black;">
-                    <img th:if="${planetDto.imgPath == null}" th:src="@{/images/repair.png}" height="300"
+                    <img th:if="${planetDto.imgPath == null}" th:src="@{/images/repair.png}" height="100"
                          class="card-img-top">
                     <img th:src="${planetDto.imgPath}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${planetDto.planetName}">행성 이름</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's
-                            content.</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <oi class="bg-primary" style="color:white"> 인구수
@@ -41,6 +37,7 @@
                     </ul>
                     <div class="card-body">
                         <button type="button" class="btn btn-primary"
+                                sec:authorize="isAuthenticated()"
                                 th:if="${#strings.equals(userName, planetDto.owner)}" data-bs-toggle="modal"
                                 data-bs-target="#sellModal">
                             행성 판매
