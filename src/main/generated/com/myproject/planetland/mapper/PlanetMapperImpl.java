@@ -2,6 +2,7 @@ package com.myproject.planetland.mapper;
 
 import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.dto.AddPlanetDto;
+import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-06T00:38:03+0900",
+    date = "2023-03-09T02:23:44+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -37,7 +38,7 @@ public class PlanetMapperImpl implements PlanetMapper {
     }
 
     @Override
-    public PlanetDto ModelToDto(Planet planet) {
+    public PlanetDto modelToDto(Planet planet) {
         if ( planet == null ) {
             return null;
         }
@@ -55,7 +56,7 @@ public class PlanetMapperImpl implements PlanetMapper {
     }
 
     @Override
-    public AddPlanetDto ModelToAddPlanetDto(Planet planet) {
+    public AddPlanetDto modelToAddPlanetDto(Planet planet) {
         if ( planet == null ) {
             return null;
         }
@@ -74,7 +75,7 @@ public class PlanetMapperImpl implements PlanetMapper {
     }
 
     @Override
-    public List<PlanetListDto> ModelToDtoList(List<Planet> planets) {
+    public List<PlanetListDto> modelToDtoList(List<Planet> planets) {
         if ( planets == null ) {
             return null;
         }
@@ -82,6 +83,20 @@ public class PlanetMapperImpl implements PlanetMapper {
         List<PlanetListDto> list = new ArrayList<PlanetListDto>( planets.size() );
         for ( Planet planet : planets ) {
             list.add( planetToPlanetListDto( planet ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<MyPlanetsDto> modelToMyPlanetsDto(List<Planet> planets) {
+        if ( planets == null ) {
+            return null;
+        }
+
+        List<MyPlanetsDto> list = new ArrayList<MyPlanetsDto>( planets.size() );
+        for ( Planet planet : planets ) {
+            list.add( planetToMyPlanetsDto( planet ) );
         }
 
         return list;
@@ -101,5 +116,21 @@ public class PlanetMapperImpl implements PlanetMapper {
         planetListDto.setImgName( planet.getImgName() );
 
         return planetListDto;
+    }
+
+    protected MyPlanetsDto planetToMyPlanetsDto(Planet planet) {
+        if ( planet == null ) {
+            return null;
+        }
+
+        MyPlanetsDto myPlanetsDto = new MyPlanetsDto();
+
+        myPlanetsDto.setPlanetId( planet.getPlanetId() );
+        myPlanetsDto.setPlanetName( planet.getPlanetName() );
+        myPlanetsDto.setPopulation( planet.getPopulation() );
+        myPlanetsDto.setValue( planet.getValue() );
+        myPlanetsDto.setPlanetStatus( planet.getPlanetStatus() );
+
+        return myPlanetsDto;
     }
 }
