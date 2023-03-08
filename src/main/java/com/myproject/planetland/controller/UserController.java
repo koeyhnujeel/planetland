@@ -1,8 +1,13 @@
 package com.myproject.planetland.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,22 +16,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.myproject.planetland.auth.CustomUserDetails;
+import com.myproject.planetland.domain.OrderHis;
+import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.domain.User;
+import com.myproject.planetland.dto.MyPlanetsDto;
+import com.myproject.planetland.dto.OrderHisDto;
 import com.myproject.planetland.dto.UserJoinDto;
 import com.myproject.planetland.mapper.UserMapper;
 import com.myproject.planetland.repository.UserRepository;
+import com.myproject.planetland.service.OrderHisService;
+import com.myproject.planetland.service.PlanetService;
 import com.myproject.planetland.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/")
 @Slf4j
+@RequiredArgsConstructor
 public class UserController {
 
-	@Autowired UserMapper mapper;
-	@Autowired UserRepository userRepository;
-	@Autowired UserService userService;
+	private final UserService userService;
+	private final OrderHisService orderHisService;
+	private final PlanetService planetService;
 
 	@GetMapping("login")
 	public String loginForm() {
@@ -47,14 +61,30 @@ public class UserController {
 		}
 
 		try {
-			UserJoinDto res = userService.createUser(userJoinDto);
-			User user = mapper.userJoinDtoToModel(res);
-			userRepository.save(user);
+			userService.createUser(userJoinDto);
 		} catch (IllegalArgumentException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			log.info("errorMessage = {}", e.getMessage());
 			return "joinForm";
 		}
 		return "redirect:/";
+	}
+
+	@GetMapping("mypage/myPlanets")
+	public String getMyPlanets(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		List<MyPlanetsDto> myPlanets = planetService.getMyPlanets(user.getUser().getUserId());
+		model.addAttribute("myPlanets", myPlanets);
+		return "myPlanets";
+	}
+
+	@GetMapping("mypage/history")
+	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 1)
+		Pageable pageable) {
+		Page<OrderHis> history = orderHisService.getHistory(user, pageable);
+		int totalPages = history.getTotalPages() - 1;
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("history", history);
+
+		return "orderHis";
 	}
 }
