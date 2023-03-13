@@ -23,6 +23,7 @@ import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
 import com.myproject.planetland.dto.SellPlanetDto;
+import com.myproject.planetland.dto.UpgradePlanetDto;
 import com.myproject.planetland.mapper.PlanetMapper;
 import com.myproject.planetland.repository.PlanetRepository;
 import com.myproject.planetland.repository.OrderHisRepository;
@@ -227,6 +228,29 @@ public class PlanetService {
 		Planet planet = res.get();
 		planet.setPlanetStatus(PlanetStatus.SOLD_OUT);
 		planetRepository.save(planet);
+	}
+
+	public void upgradePlanet(Long planetId, UpgradePlanetDto upgradePlanetDto) {
+		Optional<Planet> res = planetRepository.findById(planetId);
+		if (res.isEmpty()) {
+			throw new IllegalArgumentException("잘못된 경로입니다.");
+		}
+		int population = upgradePlanetDto.getPopulation();
+		int satellite = upgradePlanetDto.getSatellite();
+		int totalPrice = (population * 3) + (satellite * 450);
+		User user = res.get().getUser();
+		int userAsset = user.getAsset();
+		if (totalPrice > userAsset) {
+			throw new IllegalArgumentException("잔고가 부족합니다.");
+		} else {
+			Planet planet = res.get();
+			planet.setPopulation(planet.getPopulation() + population);
+			planet.setSatellite(planet.getSatellite() + satellite);
+			planetRepository.save(planet);
+
+			user.setAsset(userAsset - totalPrice);
+			userRepository.save(user);
+		}
 	}
 
 	private static String getFileName(MultipartFile imgFile) throws IOException {
