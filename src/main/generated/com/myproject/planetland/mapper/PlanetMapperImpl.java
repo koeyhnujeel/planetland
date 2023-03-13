@@ -5,6 +5,7 @@ import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
+import com.myproject.planetland.dto.SellPlanetDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-09T02:23:44+0900",
+    date = "2023-03-12T03:58:09+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -29,7 +30,7 @@ public class PlanetMapperImpl implements PlanetMapper {
         planet.setPlanetId( addPlanetDto.getPlanetId() );
         planet.setPlanetName( addPlanetDto.getPlanetName() );
         planet.setPopulation( addPlanetDto.getPopulation() );
-        planet.setValue( addPlanetDto.getValue() );
+        planet.setPrice( addPlanetDto.getPrice() );
         planet.setImgName( addPlanetDto.getImgName() );
         planet.setImgPath( addPlanetDto.getImgPath() );
         planet.setPlanetStatus( addPlanetDto.getPlanetStatus() );
@@ -48,7 +49,8 @@ public class PlanetMapperImpl implements PlanetMapper {
         planetDto.setPlanetId( planet.getPlanetId() );
         planetDto.setPlanetName( planet.getPlanetName() );
         planetDto.setPopulation( planet.getPopulation() );
-        planetDto.setValue( planet.getValue() );
+        planetDto.setLastPrice( planet.getLastPrice() );
+        planetDto.setPrice( planet.getPrice() );
         planetDto.setImgPath( planet.getImgPath() );
         planetDto.setPlanetStatus( planet.getPlanetStatus() );
 
@@ -66,7 +68,7 @@ public class PlanetMapperImpl implements PlanetMapper {
         addPlanetDto.setPlanetId( planet.getPlanetId() );
         addPlanetDto.setPlanetName( planet.getPlanetName() );
         addPlanetDto.setPopulation( planet.getPopulation() );
-        addPlanetDto.setValue( planet.getValue() );
+        addPlanetDto.setPrice( planet.getPrice() );
         addPlanetDto.setImgName( planet.getImgName() );
         addPlanetDto.setImgPath( planet.getImgPath() );
         addPlanetDto.setPlanetStatus( planet.getPlanetStatus() );
@@ -102,6 +104,20 @@ public class PlanetMapperImpl implements PlanetMapper {
         return list;
     }
 
+    @Override
+    public List<SellPlanetDto> modelToSellPlanetDto(List<Planet> planets) {
+        if ( planets == null ) {
+            return null;
+        }
+
+        List<SellPlanetDto> list = new ArrayList<SellPlanetDto>( planets.size() );
+        for ( Planet planet : planets ) {
+            list.add( planetToSellPlanetDto( planet ) );
+        }
+
+        return list;
+    }
+
     protected PlanetListDto planetToPlanetListDto(Planet planet) {
         if ( planet == null ) {
             return null;
@@ -128,9 +144,23 @@ public class PlanetMapperImpl implements PlanetMapper {
         myPlanetsDto.setPlanetId( planet.getPlanetId() );
         myPlanetsDto.setPlanetName( planet.getPlanetName() );
         myPlanetsDto.setPopulation( planet.getPopulation() );
-        myPlanetsDto.setValue( planet.getValue() );
+        myPlanetsDto.setLastPrice( planet.getLastPrice() );
         myPlanetsDto.setPlanetStatus( planet.getPlanetStatus() );
 
         return myPlanetsDto;
+    }
+
+    protected SellPlanetDto planetToSellPlanetDto(Planet planet) {
+        if ( planet == null ) {
+            return null;
+        }
+
+        SellPlanetDto sellPlanetDto = new SellPlanetDto();
+
+        sellPlanetDto.setPlanetId( planet.getPlanetId() );
+        sellPlanetDto.setPlanetName( planet.getPlanetName() );
+        sellPlanetDto.setPrice( planet.getPrice() );
+
+        return sellPlanetDto;
     }
 }
