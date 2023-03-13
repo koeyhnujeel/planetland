@@ -44,6 +44,7 @@
                                 <th scope="col">no</th>
                                 <th scope="col">행성 이름</th>
                                 <th scope="col">인구수</th>
+                                <th scope="col">위성수</th>
                                 <th scope="col">행성 가치</th>
                                 <th scope="col">거래 상태</th>
                             </tr>
@@ -53,6 +54,7 @@
                                 <td th:text="${i.index} + 1"></td>
                                 <td th:text="${list.planetName}"></td>
                                 <td th:text="${list.population}"></td>
+                                <td th:text="${list.satellite}"></td>
                                 <td th:text="|${list.lastPrice}원|"></td>
                                 <td th:text="${list.planetStatus}"></td>
                             </tr>
