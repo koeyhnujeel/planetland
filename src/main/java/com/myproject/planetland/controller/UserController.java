@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.domain.OrderHis;
@@ -22,6 +24,7 @@ import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.domain.User;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.OrderHisDto;
+import com.myproject.planetland.dto.SellPlanetDto;
 import com.myproject.planetland.dto.UserJoinDto;
 import com.myproject.planetland.mapper.UserMapper;
 import com.myproject.planetland.repository.UserRepository;
@@ -78,7 +81,7 @@ public class UserController {
 	}
 
 	@GetMapping("mypage/history")
-	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 1)
+	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 20)
 		Pageable pageable) {
 		Page<OrderHis> history = orderHisService.getHistory(user, pageable);
 		int totalPages = history.getTotalPages() - 1;
@@ -86,5 +89,23 @@ public class UserController {
 		model.addAttribute("history", history);
 
 		return "orderHis";
+	}
+
+	@GetMapping("mypage/sellPlanet")
+	public String getSellPlanet(@AuthenticationPrincipal CustomUserDetails user, Model model,
+		RedirectAttributes redirectAttributes) {
+
+		User resUser = userService.getUserByUserName(user.getUsername());
+		List<SellPlanetDto> sellPlanet = planetService.getSellPlanet(resUser.getUserId());
+
+		model.addAttribute("sellPlanet", sellPlanet);
+
+		return "sellPlanet";
+	}
+
+	@GetMapping("mypage/{planetId}/sellPlanet")
+	public String cancelSellPlanet(@PathVariable Long planetId) {
+		planetService.cancelSellPlanet(planetId);
+		return "redirect:/mypage/sellPlanet";
 	}
 }
