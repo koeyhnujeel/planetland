@@ -15,7 +15,7 @@
                             <li class="fs-4">마이페이지</li>
                             <hr>
                             <li class="nav-item">
-                                <a th:href="@{/mypage/myPlanets}" class="nav-link link-dark" aria-current="page">
+                                <a th:href="@{/mypage/myPlanets}" class="nav-link link-dark">
                                     나의 행성
                                 </a>
                             </li>
@@ -25,7 +25,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link link-dark">
+                                <a th:href="@{/mypage/sellPlanet}" class="nav-link link-dark">
                                     판매 중인 행성
                                 </a>
                             </li>
@@ -53,7 +53,7 @@
                                 <td th:text="${i.index} + 1"></td>
                                 <td th:text="${list.type}"></td>
                                 <td th:text="${list.planetName}"></td>
-                                <td th:text="|${list.value}원|"></td>
+                                <td th:text="|${list.price}원|"></td>
                                 <td th:text="${list.date}"></td>
                             </tr>
                             </tbody>
@@ -66,7 +66,7 @@
                 <footer>
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages)}">
+                            <li class="page-item" th:if="${totalPages >= 1}" th:each="page : ${#numbers.sequence(0, totalPages)}">
                                 <a class="page-link" th:href="@{/mypage/history/?page={page}(page = ${page})}"
                                    th:text="${page + 1}">1</a>
                             </li>
