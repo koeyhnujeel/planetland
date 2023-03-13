@@ -11,6 +11,7 @@ public class PlanetDto {
 	private Long planetId;
 	private String planetName;
 	private int population;
+	private int satellite;
 	private int lastPrice;
 	private int price;
 	private String imgPath;
