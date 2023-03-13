@@ -52,18 +52,53 @@
                             </thead>
                             <tbody>
                             <tr th:each="list, i: ${myPlanets}">
-                                <td th:text="${i.index} + 1" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
-                                <td th:text="${list.planetName}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
-                                <td th:text="${list.population}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
-                                <td th:text="${list.satellite}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
-                                <td th:text="|${list.lastPrice}원|" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
-                                <td th:text="${list.planetStatus}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${i.index} + 1"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.planetName}"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.population}"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.satellite}"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="|${list.lastPrice}원|"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.planetStatus}"
+                                    th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
                                 <td>
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" th:onclick="|location.href='@{/mypage/{planetId}/sellPlanet(planetId = ${list.planetId})}'|">업그레이드</button>
+                                    <button class="btn btn-outline-secondary btn-sm" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#upgrade">업그레이드
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="upgrade" tabindex="-1" aria-labelledby="upgradeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="upgradeModalLabel">행성 업그레이드</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="upgrade-form" method="post"
+                                          th:action="@{/mypage/{planetId}/upgrade(planetId=${myPlanets.planetId})}">
+                                        <h2 class="fs-5">인구수 업그레이드</h2>
+                                        <input type="number" step="100" name="population">
+                                        <hr>
+                                        <h2 class="fs-5">위성수 업그레이드</h2>
+                                        <input type="number" name="satellite">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">업그레이드</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </main>
             </div>
