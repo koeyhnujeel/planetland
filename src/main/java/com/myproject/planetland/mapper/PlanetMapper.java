@@ -9,6 +9,7 @@ import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
+import com.myproject.planetland.dto.SellPlanetDto;
 
 @Mapper(componentModel = "spring")
 public interface PlanetMapper {
@@ -19,4 +20,6 @@ public interface PlanetMapper {
 	List<PlanetListDto> modelToDtoList(List<Planet> planets);
 
 	List<MyPlanetsDto> modelToMyPlanetsDto(List<Planet> planets);
+
+	List<SellPlanetDto> modelToSellPlanetDto(List<Planet> planets);
 }
