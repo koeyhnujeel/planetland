@@ -20,7 +20,7 @@ public class AddPlanetDto {
 	@NotEmpty(message = "행성 이름을 입력해주세요.")
 	private String planetName;
 
-	@Min(value = 100, message = "최소 인구수는 100입니다.")
+	@Min(value = 100, message = "최소 인구수는 100명입니다.")
 	private int population;
 
 	private int satellite;
