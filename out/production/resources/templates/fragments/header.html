@@ -2,41 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div th:fragment="header">
-        <nav class="navbar navbar-expand-lg bg-primary p-2 text-dark bg-opacity-25">
-            <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/}">Planet Land</a>
-                <a sec:authorize="isAuthenticated()" sec:authentication="name"></a>
-                <a sec:authorize="isAuthenticated()">님, 환영합니다!</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" th:href="@{/}">홈</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">리더보드</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/mypage/myPlanets}">마이페이지</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/planets/add}" sec:authorize="hasRole('ROLE_ADMIN')">행성등록</a>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="btn btn-outline-secondary" sec:authorize="isAnonymous()" th:onclick="|location.href='@{/login}'|">
-                                로그인
-                            </button>
-                            <button type="button" class="btn btn-outline-secondary" sec:authorize="isAuthenticated()" th:onclick="|location.href='@{/logout}'|">
-                                로그아웃
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-primary p-2 text-dark bg-opacity-25">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Planet Land</a>
+            <a sec:authorize="isAuthenticated()" sec:authentication="name"></a>
+            <a sec:authorize="isAuthenticated()">님, 환영합니다!</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">리더보드</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/mypage/myPlanets}">마이페이지</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/planets/add}" sec:authorize="hasRole('ROLE_ADMIN')">행성등록</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-secondary" sec:authorize="isAnonymous()"
+                                th:onclick="|location.href='@{/login}'|">
+                            로그인
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" sec:authorize="isAuthenticated()"
+                                th:onclick="|location.href='@{/logout}'|">
+                            로그아웃
+                        </button>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 </html>
