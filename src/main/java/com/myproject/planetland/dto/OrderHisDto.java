@@ -1,5 +1,6 @@
 package com.myproject.planetland.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.myproject.planetland.constants.Type;
@@ -11,7 +12,7 @@ import lombok.Setter;
 public class OrderHisDto {
 
 	private Type type;
-	private Date date;
+	private LocalDateTime date;
 	private String planetName;
-	private int value;
+	private int price;
 }
