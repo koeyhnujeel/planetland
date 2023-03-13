@@ -1,6 +1,7 @@
 package com.myproject.planetland.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -13,16 +14,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.constants.PlanetStatus;
+import com.myproject.planetland.domain.User;
 import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.PlanetDto;
-import com.myproject.planetland.mapper.PlanetMapper;
-import com.myproject.planetland.repository.PlanetRepository;
+import com.myproject.planetland.dto.PriceHisDto;
 import com.myproject.planetland.service.PlanetService;
+import com.myproject.planetland.service.PriceHisService;
+import com.myproject.planetland.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PlanetController {
 
 	private final PlanetService planetService;
-	private final PlanetRepository planetRepository;
-	private final PlanetMapper mapper;
+	private final PriceHisService priceHisService;
+	private final UserService userService;
 
 	@ModelAttribute("planetStatuses")
 	public PlanetStatus[] planetStatuses() {
@@ -46,9 +50,12 @@ public class PlanetController {
 	public String getPlanet(@PathVariable Long planetId, @AuthenticationPrincipal CustomUserDetails user, Model model) {
 		PlanetDto planetDto = planetService.getPlanetDetail(planetId);
 		if (user != null) {
-			model.addAttribute("userName", user.getUsername());
-			model.addAttribute("userAsset", user.getUser().getAsset());
+			User resUser = userService.getUserByUserName(user.getUsername());
+			model.addAttribute("userName", resUser.getUserName());
+			model.addAttribute("userAsset", resUser.getAsset());
 		}
+		List<PriceHisDto> priceHisList = priceHisService.getPriceHisList(planetId);
+		model.addAttribute("priceHisList",priceHisList);
 		model.addAttribute("planetDto", planetDto);
 		return "planet";
 	}
@@ -120,9 +127,9 @@ public class PlanetController {
 		return "redirect:/planets/{planetId}/detail";
 	}
 
-	@GetMapping("/{planetId}/sell")
-	public String sellPlanet(@PathVariable Long planetId, RedirectAttributes redirectAttributes) {
-		planetService.sellPlanet(planetId);
+	@PostMapping("/{planetId}/sell")
+	public String sellPlanet(@PathVariable Long planetId, @RequestParam int price, RedirectAttributes redirectAttributes) {
+		planetService.sellPlanet(planetId, price);
 		redirectAttributes.addAttribute("planetId", planetId);
 		return "redirect:/planets/{planetId}/detail";
 	}
