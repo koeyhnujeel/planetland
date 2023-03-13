@@ -23,7 +23,7 @@ public class AddPlanetDto {
 	@Min(value = 1, message = "최소 인구수는 1입니다.")  //@NotEmpty는 String 타입에 사용하는 것
 	private int population;
 
-	private int value;
+	private int price;
 	private String imgName;
 	private String imgPath;
 
