@@ -42,6 +42,8 @@ public class Planet {
 
 	private int price;
 
+	private int satellite;
+
 	private String imgName;
 
 	private String imgPath;
