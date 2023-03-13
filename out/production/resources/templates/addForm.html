@@ -23,7 +23,7 @@
                                th:errors="*{planetName}"></p>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" th:field="*{population}" class="form-control rounded-3">
+                            <input type="number" step="100" th:field="*{population}" class="form-control rounded-3">
                             <label>인구수</label>
                             <p class="text text-danger" th:if="${#fields.hasErrors('population')}"
                                th:errors="*{population}"></p>
