@@ -20,9 +20,10 @@ public class AddPlanetDto {
 	@NotEmpty(message = "행성 이름을 입력해주세요.")
 	private String planetName;
 
-	@Min(value = 1, message = "최소 인구수는 1입니다.")  //@NotEmpty는 String 타입에 사용하는 것
+	@Min(value = 100, message = "최소 인구수는 100입니다.")
 	private int population;
 
+	private int satellite;
 	private int price;
 	private String imgName;
 	private String imgPath;
