@@ -47,16 +47,20 @@
                                 <th scope="col">위성수</th>
                                 <th scope="col">행성 가치</th>
                                 <th scope="col">거래 상태</th>
+                                <th scope="col">업그레이드</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="list, i: ${myPlanets}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|">
-                                <td th:text="${i.index} + 1"></td>
-                                <td th:text="${list.planetName}"></td>
-                                <td th:text="${list.population}"></td>
-                                <td th:text="${list.satellite}"></td>
-                                <td th:text="|${list.lastPrice}원|"></td>
-                                <td th:text="${list.planetStatus}"></td>
+                            <tr th:each="list, i: ${myPlanets}">
+                                <td th:text="${i.index} + 1" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.planetName}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.population}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.satellite}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="|${list.lastPrice}원|" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td th:text="${list.planetStatus}" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId = ${list.planetId})}'|"></td>
+                                <td>
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" th:onclick="|location.href='@{/mypage/{planetId}/sellPlanet(planetId = ${list.planetId})}'|">업그레이드</button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
