@@ -5,43 +5,45 @@
 <head>
     <title>Planet Land</title>
 </head>
-    <div layout:fragment="content">
-        <div class="container px-4 py-5" id="custom-cards">
-            <div class="dropdown">
-                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                th:text="${keyword}">
-                    정렬 보기
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" th:href="@{/sort?keyword=기본 순}">기본 순</a></li>
-                    <li><a class="dropdown-item" th:href="@{/sort?keyword=높은 가치 순}">높은 가치 순</a></li>
-                    <li><a class="dropdown-item" th:href="@{/sort?keyword=낮은 가치 순}">낮은 가치 순</a></li>
-                </ul>
-            </div>
-            <div class="row row-cols-lg-4 align-items-stretch g-4 py-5">
+<div layout:fragment="content">
+    <div class="container px-4 py-5" id="custom-cards">
+        <div class="dropdown">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    th:text="${keyword}">
+                정렬 보기
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="@{/sort?keyword=기본 순}">기본 순</a></li>
+                <li><a class="dropdown-item" th:href="@{/sort?keyword=높은 가치 순}">높은 가치 순</a></li>
+                <li><a class="dropdown-item" th:href="@{/sort?keyword=낮은 가치 순}">낮은 가치 순</a></li>
+            </ul>
+        </div>
+        <div class="row row-cols-lg-4 align-items-stretch g-4 py-5">
 
-                <div class="col" th:each="planet : ${planetListDto}">
+            <div class="col" th:each="planet : ${planetListDto}">
 
-                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-                         th:style="'background-image:url('+@{/images/{imgName}(imgName=${planet.imgName})}+');'">
+                <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                     th:style="'background-image:url('+@{/images/{imgName}(imgName=${planet.imgName})}+');'">
 
-                        <div class="d-flex position-relative d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <div class="d-flex position-relative d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
 
-                            <a th:href="@{/planets/{planetId}/detail(planetId=${planet.planetId})}" class="stretched-link"></a>
-                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${planet.planetName}">planetName</h3>
-                            <ul class="d-flex list-unstyled mt-auto">
-                                <li class="me-auto">
-                                    <img th:src="@{/images/logo.png}" width="32" height="32"
-                                         class="rounded-circle border border-white link bg-white">
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <small th:text="${planet.planetStatus}">status</small>
-                                </li>
-                            </ul>
-                        </div>
+                        <a th:href="@{/planets/{planetId}/detail(planetId=${planet.planetId})}"
+                           class="stretched-link"></a>
+                        <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${planet.planetName}">planetName</h3>
+                        <ul class="d-flex list-unstyled mt-auto">
+                            <li class="me-auto">
+                                <img th:src="@{/images/logo.png}" width="32" height="32"
+                                     class="rounded-circle border border-white link bg-white">
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <small th:text="${planet.planetStatus}">status</small>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </html>
