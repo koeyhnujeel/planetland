@@ -10,6 +10,7 @@ public class MyPlanetsDto {
 	private Long planetId;
 	private String planetName;
 	private int population;
+	private int satellite;
 	private int lastPrice;
 	private PlanetStatus planetStatus;
 }
