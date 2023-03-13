@@ -10,6 +10,6 @@ public class MyPlanetsDto {
 	private Long planetId;
 	private String planetName;
 	private int population;
-	private int value;
+	private int lastPrice;
 	private PlanetStatus planetStatus;
 }
