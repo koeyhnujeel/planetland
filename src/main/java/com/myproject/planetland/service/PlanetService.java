@@ -130,6 +130,7 @@ public class PlanetService {
 			Planet updatePlanet = res.get();
 			updatePlanet.setPlanetName(addPlanetDto.getPlanetName());
 			updatePlanet.setPopulation(addPlanetDto.getPopulation());
+			updatePlanet.setSatellite(addPlanetDto.getSatellite());
 			updatePlanet.setPrice(addPlanetDto.getPrice());
 			updatePlanet.setPlanetStatus(addPlanetDto.getPlanetStatus());
 			if (!imgFile.isEmpty()) {
