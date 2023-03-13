@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-12T03:58:09+0900",
+    date = "2023-03-13T23:23:14+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -49,6 +49,7 @@ public class PlanetMapperImpl implements PlanetMapper {
         planetDto.setPlanetId( planet.getPlanetId() );
         planetDto.setPlanetName( planet.getPlanetName() );
         planetDto.setPopulation( planet.getPopulation() );
+        planetDto.setSatellite( planet.getSatellite() );
         planetDto.setLastPrice( planet.getLastPrice() );
         planetDto.setPrice( planet.getPrice() );
         planetDto.setImgPath( planet.getImgPath() );
@@ -144,6 +145,7 @@ public class PlanetMapperImpl implements PlanetMapper {
         myPlanetsDto.setPlanetId( planet.getPlanetId() );
         myPlanetsDto.setPlanetName( planet.getPlanetName() );
         myPlanetsDto.setPopulation( planet.getPopulation() );
+        myPlanetsDto.setSatellite( planet.getSatellite() );
         myPlanetsDto.setLastPrice( planet.getLastPrice() );
         myPlanetsDto.setPlanetStatus( planet.getPlanetStatus() );
 
