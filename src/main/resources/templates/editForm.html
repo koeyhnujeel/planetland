@@ -21,15 +21,19 @@
                             <input type="text" th:field="*{planetName}" class="form-control rounded-3">
                             <label>행성이름</label>
                             <p class="text text-danger" th:if="${#fields.hasErrors('planetName')}"
-                               th:errors="*{planetName}">Test</p>
+                               th:errors="*{planetName}"></p>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="number" th:field="*{population}" class="form-control rounded-3">
                             <label>인구수</label>
                         </div>
                         <div class="form-floating mb-3">
+                            <input type="number" th:field="*{satellite}" class="form-control rounded-3">
+                            <label>위성수</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="number" th:field="*{price}" class="form-control rounded-3">
-                            <label>가치</label>
+                            <label>가격</label>
                         </div>
                         <input type="file" name="imgFile" id="imgFile" class="form-control rounded-3">
                         <br>
