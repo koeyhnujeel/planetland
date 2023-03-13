@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myproject.planetland.auth.CustomUserDetails;
@@ -25,6 +26,7 @@ import com.myproject.planetland.domain.User;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.OrderHisDto;
 import com.myproject.planetland.dto.SellPlanetDto;
+import com.myproject.planetland.dto.UpgradePlanetDto;
 import com.myproject.planetland.dto.UserJoinDto;
 import com.myproject.planetland.mapper.UserMapper;
 import com.myproject.planetland.repository.UserRepository;
@@ -107,5 +109,28 @@ public class UserController {
 	public String cancelSellPlanet(@PathVariable Long planetId) {
 		planetService.cancelSellPlanet(planetId);
 		return "redirect:/mypage/sellPlanet";
+	}
+
+	@GetMapping("mypage/myPlanets/{planetId}/upgrade")
+	public String upgradeForm(@PathVariable Long planetId, Model model) {
+		model.addAttribute("planetId", planetId);
+		model.addAttribute("upgradePlanetDto", new UpgradePlanetDto());
+		return "upgradeForm";
+	}
+
+	@PostMapping("mypage/myPlanets/{planetId}/upgrade")
+	public String upgradePlanet(@ModelAttribute @Valid UpgradePlanetDto upgradePlanetDto,BindingResult bindingResult, @PathVariable Long planetId,
+		Model model) {
+		if (bindingResult.hasErrors()) {
+			return "upgradeForm";
+		}
+
+		try {
+			planetService.upgradePlanet(planetId, upgradePlanetDto);
+		} catch (IllegalArgumentException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "upgradeForm";
+		}
+		return "redirect:/mypage/myPlanets";
 	}
 }
