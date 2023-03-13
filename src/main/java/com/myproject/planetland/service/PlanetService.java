@@ -16,14 +16,17 @@ import com.myproject.planetland.constants.PlanetStatus;
 import com.myproject.planetland.constants.Type;
 import com.myproject.planetland.domain.OrderHis;
 import com.myproject.planetland.domain.Planet;
+import com.myproject.planetland.domain.PriceHis;
 import com.myproject.planetland.domain.User;
 import com.myproject.planetland.dto.AddPlanetDto;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.PlanetDto;
 import com.myproject.planetland.dto.PlanetListDto;
+import com.myproject.planetland.dto.SellPlanetDto;
 import com.myproject.planetland.mapper.PlanetMapper;
 import com.myproject.planetland.repository.PlanetRepository;
 import com.myproject.planetland.repository.OrderHisRepository;
+import com.myproject.planetland.repository.PriceHisRepository;
 import com.myproject.planetland.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,7 @@ public class PlanetService {
 	private final PlanetRepository planetRepository;
 	private final UserRepository userRepository;
 	private final OrderHisRepository hisRepository;
+	private final PriceHisRepository priceHisRepository;
 	private final PlanetMapper mapper;
 
 	public AddPlanetDto getEditPlanet(Long planetId) {
@@ -78,6 +82,11 @@ public class PlanetService {
 		return mapper.modelToMyPlanetsDto(res);
 	}
 
+	public List<SellPlanetDto> getSellPlanet(Long userId) {
+		List<Planet> res = planetRepository.findByUser_UserIdAndPlanetStatus(userId, PlanetStatus.ON_SALE);
+		return mapper.modelToSellPlanetDto(res);
+	}
+
 	public List<PlanetListDto> getAllPlanet(String keyword) {
 		if (keyword.equals("기본 순")) {
 			List<Planet> planetList = planetRepository.findAll();
@@ -85,12 +94,12 @@ public class PlanetService {
 			return planetListDtos;
 
 		} else if (keyword.equals("높은 가치 순")) {
-			List<Planet> allOrderByValueDesc = planetRepository.findAllByOrderByValueDesc();
+			List<Planet> allOrderByValueDesc = planetRepository.findAllByOrderByPriceDesc();
 			List<PlanetListDto> planetListDtosDesc = mapper.modelToDtoList(allOrderByValueDesc);
 			return planetListDtosDesc;
 
 		} else if (keyword.equals("낮은 가치 순")) {
-			List<Planet> allOrderByValueAsc = planetRepository.findAllByOrderByValueAsc();
+			List<Planet> allOrderByValueAsc = planetRepository.findAllByOrderByPriceAsc();
 			List<PlanetListDto> planetListDtosAsc = mapper.modelToDtoList(allOrderByValueAsc);
 			return planetListDtosAsc;
 		} else {
@@ -121,7 +130,7 @@ public class PlanetService {
 			Planet updatePlanet = res.get();
 			updatePlanet.setPlanetName(addPlanetDto.getPlanetName());
 			updatePlanet.setPopulation(addPlanetDto.getPopulation());
-			updatePlanet.setValue(addPlanetDto.getValue());
+			updatePlanet.setPrice(addPlanetDto.getPrice());
 			updatePlanet.setPlanetStatus(addPlanetDto.getPlanetStatus());
 			if (!imgFile.isEmpty()) {
 				if (updatePlanet.getImgPath() != null) {
@@ -174,7 +183,7 @@ public class PlanetService {
 				if (planets.get(i).getPlanetName().equals(planet.getPlanetName())) {
 					planets.remove(i);
 					seller.setPlanets(planets);
-					seller.setAsset(seller.getAsset() + planet.getValue());
+					seller.setAsset(seller.getAsset() + planet.getPrice());
 					OrderHis his = createOrderHis(seller, planet);
 					his.setType(Type.SELL);
 					hisRepository.save(his);
@@ -182,24 +191,29 @@ public class PlanetService {
 				}
 			}
 		}
+
 		planet.setUser(buyer);
+		planet.setLastPrice(planet.getPrice());
 		planet.setPlanetStatus(PlanetStatus.SOLD_OUT);
-		buyer.setAsset(buyer.getAsset() - planet.getValue());
+		buyer.setAsset(buyer.getAsset() - planet.getPrice());
 		buyer.getPlanets().add(planet);
 		OrderHis his = createOrderHis(buyer, planet);
+		PriceHis priceHis = createPriceHis(planet);
 		his.setType(Type.BUY);
 		hisRepository.save(his);
 		userRepository.save(buyer);
 		planetRepository.save(planet);
+		priceHisRepository.save(priceHis);
 	}
 
-	public void sellPlanet(Long planetId) {
+	public void sellPlanet(Long planetId, int price) {
 		Optional<Planet> res = planetRepository.findById(planetId);
 		if (res.isEmpty()) {
 			throw new IllegalArgumentException("잘못된 경로입니다.");
 		}
 
 		Planet planet = res.get();
+		planet.setPrice(price);
 		planet.setPlanetStatus(PlanetStatus.ON_SALE);
 		planetRepository.save(planet);
 	}
@@ -228,9 +242,17 @@ public class PlanetService {
 	private static OrderHis createOrderHis(User user, Planet planet) {
 		OrderHis his = new OrderHis();
 		his.setPlanetName(planet.getPlanetName());
-		his.setValue(planet.getValue());
+		his.setPrice(planet.getPrice());
 		his.setUser(user);
 		user.getOrderHis().add(his);
 		return his;
+	}
+
+	private static PriceHis createPriceHis(Planet planet) {
+		PriceHis priceHis = new PriceHis();
+		priceHis.setPrice(planet.getPrice());
+		priceHis.setPlanet(planet);
+		planet.getPriceHis().add(priceHis);
+		return priceHis;
 	}
 }
