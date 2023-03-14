@@ -1,5 +1,6 @@
 package com.myproject.planetland.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -9,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.planetland.constants.Money;
 import com.myproject.planetland.constants.Role;
+import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.domain.User;
+import com.myproject.planetland.dto.MyAssetDto;
 import com.myproject.planetland.dto.UserJoinDto;
 import com.myproject.planetland.mapper.UserMapper;
+import com.myproject.planetland.repository.PlanetRepository;
 import com.myproject.planetland.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,7 @@ public class UserService {
 
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
+	private final PlanetRepository planetRepository;
 	private UserMapper mapper;
 
 	public User getUser(Long userId) {
@@ -63,5 +68,25 @@ public class UserService {
 			user.setRole(Role.ROLE_USER);
 			userRepository.save(user);
 		}
+	}
+
+	public MyAssetDto getMyAsset(String userName) {
+		Optional<User> res = userRepository.findByUserName(userName);
+		if (res.isEmpty()) {
+			throw new IllegalArgumentException("잘못된 경로입니다.");
+		}
+
+		User user = res.get();
+		MyAssetDto myAssetDto = new MyAssetDto();
+		myAssetDto.setAsset(user.getAsset());
+
+		int total = 0;
+		List<Planet> planetList = planetRepository.findByUser_userId(user.getUserId());
+		for (Planet planet : planetList) {
+			total += planet.getLastPrice();
+		}
+		myAssetDto.setTotal(user.getAsset() + total);
+
+		return myAssetDto;
 	}
 }
