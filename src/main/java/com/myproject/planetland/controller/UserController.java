@@ -23,6 +23,7 @@ import com.myproject.planetland.auth.CustomUserDetails;
 import com.myproject.planetland.domain.OrderHis;
 import com.myproject.planetland.domain.Planet;
 import com.myproject.planetland.domain.User;
+import com.myproject.planetland.dto.MyAssetDto;
 import com.myproject.planetland.dto.MyPlanetsDto;
 import com.myproject.planetland.dto.OrderHisDto;
 import com.myproject.planetland.dto.SellPlanetDto;
@@ -78,6 +79,9 @@ public class UserController {
 	@GetMapping("mypage/myPlanets")
 	public String getMyPlanets(@AuthenticationPrincipal CustomUserDetails user, Model model) {
 		List<MyPlanetsDto> myPlanets = planetService.getMyPlanets(user.getUser().getUserId());
+		MyAssetDto myAssetDto = userService.getMyAsset(user.getUsername());
+
+		model.addAttribute("myAssetDto", myAssetDto);
 		model.addAttribute("myPlanets", myPlanets);
 		return "myPlanets";
 	}
