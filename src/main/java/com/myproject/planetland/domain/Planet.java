@@ -3,6 +3,7 @@ package com.myproject.planetland.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -55,6 +56,6 @@ public class Planet {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "planet")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "planet", cascade = CascadeType.REMOVE)
 	private List<PriceHis> priceHis = new ArrayList<>();
 }
