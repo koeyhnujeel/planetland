@@ -19,11 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired UserRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String userName){
 		Optional<User> res = userRepository.findByUserName(userName);
-		if (res.isPresent()) {
+		if (res.isEmpty()) {
+			throw new UsernameNotFoundException("존재하지 않는 계정입니다.");
+		} else {
 			return new CustomUserDetails(res.get());
 		}
-		return null;
 	}
 }
