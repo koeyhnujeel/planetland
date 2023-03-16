@@ -174,9 +174,9 @@
 
 
 
-<details><summary>행성 구매</summary>
+<details><summary>행성구매 화면</summary>
 
-<img width="689" alt="image" src="https://user-images.githubusercontent.com/125088568/225738749-5e8fe56c-60ea-49c2-96d1-2ed064905c9d.png"><br><br>
+<img width="773" alt="image" src="https://user-images.githubusercontent.com/125088568/225744573-5b6cb269-b27d-4174-bfd9-72e14879335a.png"><br><br>
 
 ## 코드<br>
 
@@ -193,6 +193,12 @@
 <img width="448" alt="image" src="https://user-images.githubusercontent.com/125088568/225737767-0b2370b5-c547-4de5-a465-4eb358e680b2.png">
 </details>
 
+<details><summary>본인 행성 구매버튼 클릭 시 메시지 전달</summary>
+
+<img width="698" alt="image" src="https://user-images.githubusercontent.com/125088568/225745153-464be19d-5168-446b-a687-cf5b75b9ed07.png"><br>
+<img width="571" alt="image" src="https://user-images.githubusercontent.com/125088568/225745301-d1fa6a64-7d05-4213-9b8f-3a1e8a9a2411.png">
+</details>
+
 <details><summary>잔고가 부족하다면 문구와 함께 버튼 비활성화</summary>
 
 <img width="561" alt="image" src="https://user-images.githubusercontent.com/125088568/225739542-c0334101-3d29-41ee-a948-5eff359cbdf7.png">
@@ -204,5 +210,62 @@
 
 
 
+<details><summary>행성판매 화면</summary>
 
+<img width="754" alt="image" src="https://user-images.githubusercontent.com/125088568/225746596-008e74ab-aa58-4d7b-b6c4-892fab1cb3b1.png"><br>
+
+## 코드<br>
+
+<details><summary>판매 등록</summary>
+
+<img width="839" alt="image" src="https://user-images.githubusercontent.com/125088568/225746905-17c83f0e-dc4d-48b9-a713-00fdfb4051d4.png"><br>
+<img width="441" alt="image" src="https://user-images.githubusercontent.com/125088568/225747132-2e590cbb-a03d-4233-a1dc-946cb7fae926.png">
+</details>
+
+<details><summary>판매 취소</summary>
+
+<img width="709" alt="image" src="https://user-images.githubusercontent.com/125088568/225747509-8f774842-d255-4a6b-9e06-a85dc2c4098a.png"><br>
+<img width="443" alt="image" src="https://user-images.githubusercontent.com/125088568/225747614-e55a72d3-ec84-48f9-87e0-7d0cf83b9cbc.png">
+</details><br/>
+
+</details>
+
+
+
+
+
+<details><summary>행성 효과</summary>
+
+### 일정 시간마다 돈을 얻습니다 <br>
+- ex) 인구수는 100명당 30원, 위성수는 1개당 50원
+- 시간을 7초 간격으로 설정했을 때, 14초간 두 개의 행성 합해서 인구수 300명, 위성 2개 기준 190원씩 잔고 두번 증가 <br><br>
+
+<img width="767" alt="image" src="https://user-images.githubusercontent.com/125088568/225751387-f50e99fd-7e0c-433f-9aea-6f1f90a974e9.png"><br>
+
+
+## 코드<br>
+
+<img width="616" alt="image" src="https://user-images.githubusercontent.com/125088568/225748874-22268336-759a-4875-8d56-cd5df499e0a1.png">
+<br/>
+</details>
+
+
+
+
+
+<details><summary>나의 행성</summary>
+
+<img width="1427" alt="image" src="https://user-images.githubusercontent.com/125088568/225753090-a0c183e3-db79-4644-a819-367fef9fc110.png"><br>
+
+## 코드<br>
+
+<img width="646" alt="image" src="https://user-images.githubusercontent.com/125088568/225753260-1ec12883-1b72-463e-ad07-3d6358919fc3.png"><br><br>
+
+## 행성 목록<br>
+<img width="467" alt="image" src="https://user-images.githubusercontent.com/125088568/225753411-6e62b9db-a129-4228-9592-2be61b04b5d4.png"><br><br>
+
+## 잔고 및 총 평가<br>
+<img width="584" alt="image" src="https://user-images.githubusercontent.com/125088568/225753538-3e0202bc-0b79-4d54-af00-c4fdb87c16e5.png">
+<br/>
+</details>
 
