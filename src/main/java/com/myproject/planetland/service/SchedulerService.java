@@ -21,7 +21,7 @@ public class SchedulerService {
 	private final PlanetRepository planetRepository;
 	private final UserRepository userRepository;
 
-	// @Scheduled(fixedDelay = 7000)
+	@Scheduled(fixedDelay = 7000)
 	public void run() {
 		List<User> allUser = userRepository.findAll();
 		for (User user : allUser) {
@@ -30,7 +30,7 @@ public class SchedulerService {
 			for (Planet userPlanet : userPlanets) {
 				int satellite = userPlanet.getSatellite();
 				int population = userPlanet.getPopulation() / 100;
-				int total = (satellite * 50) + (population * 30); // 위성은 일정시간 당 50원 (1개 단위), 인구는 일정시간 당 30원 (100명 단위)
+				int total = (satellite * 50) + (population * 30);
 				plusAsset += total;
 			}
 			user.setAsset(user.getAsset() + plusAsset);
