@@ -126,5 +126,22 @@
 <img width="700" alt="image" src="https://user-images.githubusercontent.com/125088568/225728531-f3b1fce6-d7fb-4d00-a262-af0a67d8ff4c.png"><br/>
 </details>
 
+<details><summary>행성 상세정보 화면</summary>
 
+<img width="538" alt="image" src="https://user-images.githubusercontent.com/125088568/225731296-b2874579-a2f9-4826-a960-0c3ebe883fb6.png"><br>
+
+## 코드<br>
+
+<details><summary>행성 상세 정보</summary>
+
+<img width="819" alt="image" src="https://user-images.githubusercontent.com/125088568/225732431-618961ec-b97a-4ff9-a65e-fbfbded2c58f.png"><br>
+<img width="701" alt="image" src="https://user-images.githubusercontent.com/125088568/225732630-b3908c8b-8f59-4d57-8aa6-691ab062cd96.png">
+</details>
+
+<details><summary>가격 변동 그래프(최근 7건에 대한 거래만 표시)</summary>
+
+<img width="531" alt="image" src="https://user-images.githubusercontent.com/125088568/225733266-4dd5c923-1ec9-4261-8e2b-e86c2cbb5b85.png"><br/>
+</details>
+
+</details>
 
