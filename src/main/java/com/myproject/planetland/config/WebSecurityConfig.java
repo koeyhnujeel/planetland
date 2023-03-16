@@ -7,8 +7,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.myproject.planetland.exception.CustomFailureHandler;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig {
+
+	private final CustomFailureHandler customFailureHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -22,6 +29,7 @@ public class WebSecurityConfig {
 			.loginPage("/login")
 			.loginProcessingUrl("/loginProc")
 			.defaultSuccessUrl("/")
+			.failureHandler(customFailureHandler)
 			.and()
 			.logout()
 			.logoutUrl("/logout")
