@@ -46,6 +46,10 @@
 
 </details>
 
+
+
+
+
 <details><summary>로그인 화면</summary>
 
 ![image](https://user-images.githubusercontent.com/125088568/225677250-fe6c6d43-0c3e-44bd-9004-1eccfce5133f.png)
@@ -60,6 +64,10 @@
 
 </details>
 
+
+
+
+
 <details><summary>회원가입 화면</summary>
 
 <img width="722" alt="image" src="https://user-images.githubusercontent.com/125088568/225702838-e0c361aa-82c7-4015-a392-9c3a0ea9e9c6.png"><br><br>
@@ -72,6 +80,10 @@
 </details><br/>
 
 </details>
+
+
+
+
 
 <details><summary>행성등록 화면</summary>
 
@@ -96,6 +108,10 @@
 
 </details>
 
+
+
+
+
 <details><summary>행성수정 화면</summary>
 
 <img width="240" alt="image" src="https://user-images.githubusercontent.com/125088568/225722500-0fc26cf8-7603-4753-bba5-b3a9848f2e01.png"><br><br>
@@ -110,6 +126,11 @@
 <img width="804" alt="image" src="https://user-images.githubusercontent.com/125088568/225723217-8c7feddc-c8aa-4109-8140-36ab659bf4a2.png"><br>
 <img width="832" alt="image" src="https://user-images.githubusercontent.com/125088568/225723961-43adce65-0f10-4c57-8367-12f68f32e49e.png"><br/>
 </details>
+
+
+
+
+
 
 <details><summary>행성삭제 화면</summary>
 
@@ -126,6 +147,10 @@
 <img width="700" alt="image" src="https://user-images.githubusercontent.com/125088568/225728531-f3b1fce6-d7fb-4d00-a262-af0a67d8ff4c.png"><br/>
 </details>
 
+
+
+
+
 <details><summary>행성 상세정보 화면</summary>
 
 <img width="538" alt="image" src="https://user-images.githubusercontent.com/125088568/225731296-b2874579-a2f9-4826-a960-0c3ebe883fb6.png"><br>
@@ -140,8 +165,44 @@
 
 <details><summary>가격 변동 그래프(최근 7건에 대한 거래만 표시)</summary>
 
-<img width="531" alt="image" src="https://user-images.githubusercontent.com/125088568/225733266-4dd5c923-1ec9-4261-8e2b-e86c2cbb5b85.png"><br/>
-</details>
+<img width="531" alt="image" src="https://user-images.githubusercontent.com/125088568/225733266-4dd5c923-1ec9-4261-8e2b-e86c2cbb5b85.png">
+</details><br/>
 
 </details>
+
+
+
+
+
+<details><summary>행성 구매</summary>
+
+<img width="689" alt="image" src="https://user-images.githubusercontent.com/125088568/225738749-5e8fe56c-60ea-49c2-96d1-2ed064905c9d.png"><br><br>
+
+## 코드<br>
+
+<details><summary>행성 구매 코드(잔고 차감, 행성 소유주 변경 또는 지정, 판매 버튼 노출, 거래 내역 및 가격 변동 내역 생성)</summary>
+#### 구매 후 행성 상태는 미판매 상태가 되도록 구현하였다.<br>
+
+<img width="1006" alt="image" src="https://user-images.githubusercontent.com/125088568/225740514-6ea2d423-352b-4703-9797-a70f2eed219e.png"><br>
+<img width="751" alt="image" src="https://user-images.githubusercontent.com/125088568/225741744-1b0630ca-3970-46bd-b414-de054a1a5692.png"><br>
+<img width="594" alt="image" src="https://user-images.githubusercontent.com/125088568/225741882-79330497-c835-4e5f-8178-b88761911985.png">
+</details>
+
+<details><summary>비로그인 유저가 구매버튼 클릭 시 로그인 페이지로 이동</summary>
+
+<img width="448" alt="image" src="https://user-images.githubusercontent.com/125088568/225737767-0b2370b5-c547-4de5-a465-4eb358e680b2.png">
+</details>
+
+<details><summary>잔고가 부족하다면 문구와 함께 버튼 비활성화</summary>
+
+<img width="561" alt="image" src="https://user-images.githubusercontent.com/125088568/225739542-c0334101-3d29-41ee-a948-5eff359cbdf7.png">
+</details><br/>
+
+</details>
+
+
+
+
+
+
 
