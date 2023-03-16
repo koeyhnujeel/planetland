@@ -19,7 +19,7 @@
 - Bootsrap, Thymeleaf <br><br>
 
 ## ERD 설계
-![image](https://user-images.githubusercontent.com/125088568/225669768-a5e67038-ec0e-44be-b8cb-ea672e21f770.png)
+<img width="380" alt="image" src="https://user-images.githubusercontent.com/125088568/225725317-4b01b3d6-7c29-477a-bf07-92396d38933d.png">
 <br><br>
 
 ## 구현
@@ -102,8 +102,29 @@
 
 ## 코드<br>
 
+<details><summary>관리자계정 로그인 시 행성 상세정보 페이지에 수정버튼 노출</summary>
+
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/125088568/225728184-8d4d337f-4cfe-48c8-bd97-8d0d7dbbbfe7.png">
+</details>
+
 <img width="804" alt="image" src="https://user-images.githubusercontent.com/125088568/225723217-8c7feddc-c8aa-4109-8140-36ab659bf4a2.png"><br>
 <img width="832" alt="image" src="https://user-images.githubusercontent.com/125088568/225723961-43adce65-0f10-4c57-8367-12f68f32e49e.png"><br/>
 </details>
+
+<details><summary>행성삭제 화면</summary>
+
+<img width="676" alt="image" src="https://user-images.githubusercontent.com/125088568/225726580-b13d88df-051d-4cfe-8e93-2d7985260a16.png"><br>
+
+## 코드<br>
+
+<details><summary>관리자계정 로그인 시 행성 상세정보 페이지에 삭제버튼 노출</summary>
+
+<img width="587" alt="image" src="https://user-images.githubusercontent.com/125088568/225727714-a9da473f-8425-4f1a-ae31-8e2d4d160f8d.png">
+</details>
+
+<img width="538" alt="image" src="https://user-images.githubusercontent.com/125088568/225728639-af629b19-cd01-4069-87d4-4d57b96542db.png"><br>
+<img width="700" alt="image" src="https://user-images.githubusercontent.com/125088568/225728531-f3b1fce6-d7fb-4d00-a262-af0a67d8ff4c.png"><br/>
+</details>
+
 
 
