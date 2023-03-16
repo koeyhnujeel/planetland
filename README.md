@@ -238,7 +238,7 @@
 
 ### 일정 시간마다 돈을 얻습니다 <br>
 - ex) 인구수는 100명당 30원, 위성수는 1개당 50원
-- 시간을 7초 간격으로 설정했을 때, 14초간 두 개의 행성 합해서 인구수 300명, 위성 2개 기준 190원씩 잔고 두번 증가 <br><br>
+- 시간을 7초 간격으로 14초간 실행했을 경우<br><br>
 
 <img width="767" alt="image" src="https://user-images.githubusercontent.com/125088568/225751387-f50e99fd-7e0c-433f-9aea-6f1f90a974e9.png"><br>
 
@@ -266,6 +266,69 @@
 
 ## 잔고 및 총 평가<br>
 <img width="584" alt="image" src="https://user-images.githubusercontent.com/125088568/225753538-3e0202bc-0b79-4d54-af00-c4fdb87c16e5.png">
+
+
+<details><summary>리스트 클릭 시 해당 행성 상세 페이지로 이동</summary>
+
+<img width="709" alt="image" src="https://user-images.githubusercontent.com/125088568/225757701-d3c29ec9-8254-44b8-9119-f5b29196490e.png">
+</details><br/>
+</details>
+
+
+
+
+<details><summary>행성 업그레이드</summary>
+
+<img width="776" alt="image" src="https://user-images.githubusercontent.com/125088568/225755458-3ac88623-2d21-4890-bcac-edb5e54aafdc.png"><br><br>
+
+## 코드<br>
+
+<img width="812" alt="image" src="https://user-images.githubusercontent.com/125088568/225754703-527e2365-7085-4bfe-971b-839dfb4e8cf3.png"><br>
+<img width="545" alt="image" src="https://user-images.githubusercontent.com/125088568/225754870-e9914baf-067a-4727-86b0-cbae5c38b7c4.png"><br>
+<br/>
+
+</details>
+
+
+
+
+
+<details><summary>거래내역</summary>
+
+<img width="679" alt="image" src="https://user-images.githubusercontent.com/125088568/225756466-485ead0c-307e-4aab-a2c5-6f30db4c2671.png"><br><br>
+
+## 코드<br>
+
+### 구매, 판매 거래내역 모두 구매 컨트롤러 실행 시 생성된다
+### 거래내역 5건을 가졌을 때, @PageableDefault(size = 2)로 설정<br><br>
+
+
+<img width="798" alt="image" src="https://user-images.githubusercontent.com/125088568/225757038-5b3b10f4-b8cf-4a84-81f2-320409c19ad0.png"><br>
+<img width="662" alt="image" src="https://user-images.githubusercontent.com/125088568/225757152-fe9b52d3-42d6-4afa-9cb7-e9843b476e59.png"><br>
+<img width="752" alt="image" src="https://user-images.githubusercontent.com/125088568/225757335-1721dd22-8cc4-4191-b536-b469071a8763.png"><br>
 <br/>
 </details>
 
+
+
+
+
+<datails><summary>판매 중인 행성</summary>
+
+<img width="1430" alt="image" src="https://user-images.githubusercontent.com/125088568/225759078-97448d1c-6202-4ed7-b14c-6bda3c0d61cc.png"><br><br>
+
+## 코드<br>
+
+<details><summary>행성 상태가 ON_SALE</summary>
+
+<img width="632" alt="image" src="https://user-images.githubusercontent.com/125088568/225759418-53e1b1d2-01c7-4a09-ae2a-fe8baa7c2d26.png"><br>
+<img width="717" alt="image" src="https://user-images.githubusercontent.com/125088568/225759505-afc58171-cc5b-4684-8761-076cf0b33ccb.png"><br>
+</details>
+
+<details><summary>취소 버튼</summary>
+
+<img width="441" alt="image" src="https://user-images.githubusercontent.com/125088568/225759960-afa76fbf-af6d-45d8-87b6-395ce98ed2c0.png"><br>
+<img width="441" alt="image" src="https://user-images.githubusercontent.com/125088568/225760046-de7866e7-b811-4ca0-abe7-f341ec3fa2e2.png"><br/>
+</details>
+
+</details>
