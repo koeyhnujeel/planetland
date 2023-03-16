@@ -49,7 +49,9 @@ public class UserController {
 	private final PlanetService planetService;
 
 	@GetMapping("login")
-	public String loginForm() {
+	public String loginForm(@RequestParam(value = "error", required = false) String errorMessage, Model model) {
+
+		model.addAttribute("errorMessage", errorMessage);
 		return "loginForm";
 	}
 
@@ -88,7 +90,7 @@ public class UserController {
 
 	@GetMapping("mypage/history")
 	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 20)
-		Pageable pageable) {
+	Pageable pageable) {
 		Page<OrderHis> history = orderHisService.getHistory(user, pageable);
 		int totalPages = history.getTotalPages() - 1;
 		model.addAttribute("totalPages", totalPages);
@@ -123,7 +125,8 @@ public class UserController {
 	}
 
 	@PostMapping("mypage/myPlanets/{planetId}/upgrade")
-	public String upgradePlanet(@ModelAttribute @Valid UpgradePlanetDto upgradePlanetDto,BindingResult bindingResult, @PathVariable Long planetId,
+	public String upgradePlanet(@ModelAttribute @Valid UpgradePlanetDto upgradePlanetDto, BindingResult bindingResult,
+		@PathVariable Long planetId,
 		Model model) {
 		if (bindingResult.hasErrors()) {
 			return "upgradeForm";
