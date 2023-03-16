@@ -16,13 +16,10 @@ import lombok.RequiredArgsConstructor;
 public class OrderHisService {
 
 	private final OrderHisRepository hisRepository;
-	private final TransactionHisMapper mapper;
 
 	public Page<OrderHis> getHistory(CustomUserDetails user, Pageable pageable) {
 		String userName = user.getUsername();
 		Page<OrderHis> list = hisRepository.findByUser_UserNameOrderByDateAsc(userName, pageable);
-		// Page<OrderHisDto> orderHisDtos = mapper.modelToDto(list);
-
 		return list;
 	}
 }
