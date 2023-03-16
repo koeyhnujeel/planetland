@@ -257,7 +257,7 @@ public class PlanetService {
 		String oriName = imgFile.getOriginalFilename();
 		String myPath = ImgDir.PATH;
 
-		UUID uuid = UUID.randomUUID(); // 파일이름 중복을 피하기 위한 식별자 역할
+		UUID uuid = UUID.randomUUID();
 		String savedFileName = uuid + "_" + oriName;
 
 		imgFile.transferTo(new File(myPath + savedFileName));
