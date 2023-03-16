@@ -50,7 +50,6 @@ public class UserController {
 
 	@GetMapping("login")
 	public String loginForm(@RequestParam(value = "error", required = false) String errorMessage, Model model) {
-
 		model.addAttribute("errorMessage", errorMessage);
 		return "loginForm";
 	}
@@ -89,7 +88,7 @@ public class UserController {
 	}
 
 	@GetMapping("mypage/history")
-	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 20)
+	public String getHistory(@AuthenticationPrincipal CustomUserDetails user, Model model, @PageableDefault(size = 2)
 	Pageable pageable) {
 		Page<OrderHis> history = orderHisService.getHistory(user, pageable);
 		int totalPages = history.getTotalPages() - 1;
