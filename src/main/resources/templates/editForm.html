@@ -15,7 +15,8 @@
                 </div>
 
                 <li class="modal-body p-5 pt-0" style="list-style:none;">
-                    <form role="form" method="post" th:action="@{/planets/{planetId}/edit(planetId=${addPlanetDto.planetId})}"
+                    <form role="form" method="post"
+                          th:action="@{/planets/{planetId}/edit(planetId=${addPlanetDto.planetId})}"
                           th:object="${addPlanetDto}" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
                             <input type="text" th:field="*{planetName}" class="form-control rounded-3">
@@ -42,17 +43,20 @@
                         <div class="container text-center">
                             <div class="row">
                                 <div th:each="status : ${planetStatuses}" class="col">
-                                    <input type="radio" th:field="*{planetStatus}" th:value="${status.name()}" class="btn-check"
+                                    <input type="radio" th:field="*{planetStatus}" th:value="${status.name()}"
+                                           class="btn-check"
                                            name="options-outlined" autocomplete="off" checked>
-                                    <label th:for="${#ids.prev('planetStatus')}" th:text="${status}" class="btn btn-outline-secondary">행성
+                                    <label th:for="${#ids.prev('planetStatus')}" th:text="${status}"
+                                           class="btn btn-outline-secondary">행성
                                         상태</label>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-success" type="submit">수정</button>
-                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn btn-outline-secondary" type="button" th:onclick="|location.href='@{/planets/{planetId}/detail(planetId=${addPlanetDto.planetId})}'|">취소</button>
-
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn btn-outline-secondary" type="button"
+                                onclick="window.history.back()">취소
+                        </button>
                         <hr class="my-4">
                     </form>
             </div>
