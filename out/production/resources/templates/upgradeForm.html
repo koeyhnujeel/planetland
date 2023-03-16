@@ -20,7 +20,7 @@
                         <p>일정 시간마다 30원을 획득합니다.</p>
                         <p>인구수 혜택은 100명 단위로 받습니다.</p>
                         <p>가격은 1명당 3원입니다.</p>
-                        <input type="number" step="100" value="0" name="population">
+                        <input type="number" value="0" name="population">
                         <p class="text text-danger" th:if="${#fields.hasErrors('population')}"
                            th:errors="*{population}"></p>
                         <hr>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">업그레이드</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
                 </form>
             </div>
