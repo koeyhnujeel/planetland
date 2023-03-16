@@ -313,7 +313,7 @@
 
 
 
-<datails><summary>판매 중인 행성</summary>
+<details><summary>판매 중인 행성</summary>
 
 <img width="1430" alt="image" src="https://user-images.githubusercontent.com/125088568/225759078-97448d1c-6202-4ed7-b14c-6bda3c0d61cc.png"><br><br>
 
