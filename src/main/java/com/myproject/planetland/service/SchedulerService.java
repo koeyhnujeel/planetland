@@ -21,7 +21,7 @@ public class SchedulerService {
 	private final PlanetRepository planetRepository;
 	private final UserRepository userRepository;
 
-	@Scheduled(fixedDelay = 7000)
+	// @Scheduled(fixedDelay = 7000)
 	public void run() {
 		List<User> allUser = userRepository.findAll();
 		for (User user : allUser) {
