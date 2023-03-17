@@ -16,7 +16,7 @@
 - Spring Data JPA <br>
 - Spring Security <br>
 - 데이터베이스: MySQL <br>
-- Bootsrap, Thymeleaf <br><br>
+- Bootstrap, Thymeleaf <br><br>
 
 ## ERD 설계
 <img width="380" alt="image" src="https://user-images.githubusercontent.com/125088568/225725317-4b01b3d6-7c29-477a-bf07-92396d38933d.png">
