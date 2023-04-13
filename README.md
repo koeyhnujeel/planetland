@@ -10,7 +10,7 @@
 ## 개발 환경
 - 운영체제: macOS <br>
 - IDE: IntelliJ <br>
-- Java 8 <br>
+- Java 11 <br>
 - Spring boot 2.7.8 <br>
 - Spring Web <br>
 - Spring Data JPA <br>
